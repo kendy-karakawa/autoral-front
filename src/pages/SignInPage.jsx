@@ -44,6 +44,6 @@ export default function SignInPage() {
   );
 }
 
-const Div = w.div(`w-6/12`);
+const Div = w.div(`w-full`);
 const Form = w.form(`w-6/12 flex flex-col`)
 const A = w.span(`text-[#81C2FF]`);

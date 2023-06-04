@@ -1,7 +1,5 @@
 import axios from "axios";
 
-import axios from "axios";
-
 function signUp(body) {
   return axios.post(`${import.meta.env.VITE_APP_API_URL}/user`, body);
 }

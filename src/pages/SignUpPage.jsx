@@ -1,28 +1,59 @@
 import { w } from "windstitch";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link, Navigate } from "react-router-dom";
 import { Container, MiniText, Title, WhiteBox } from "../assets/styles";
 import Input from "../components/Form/Input";
 import Button from "../components/Form/Button";
+import apiAuth from "../services/ApiAuth";
 
 export default function SignUpPage() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const { name, phone, email, password, confirmPassword } = userInfo;
+  const [disable, setDisable] = useState(false);
+  const [senhaInvalida, setSenhaInvalida] = useState(false);
+
+  async function createAccount(e) {
+    e.preventDefault();
+    setDisable(true);
+
+    if (password !== confirmPassword) {
+      setDisable(false);
+      setSenhaInvalida(true)
+      return;
+    }
+
+    const body = { name, phone, email, password };
+    try {
+      const result = await apiAuth.signUp(body);
+      navigate("/sign-in");
+      setDisable(false);
+    } catch (err) {
+      alert(err.response.data.message);
+      setDisable(false);
+    }
+  }
+
   return (
     <Container>
       <WhiteBox>
         <Title>Cadastro</Title>
-        <Form>
+        <Form onSubmit={createAccount}>
           <Input
             label="name"
             type="text"
             placeholder="Nome"
             fullWidth
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            required
+            disabled={disable}
+            onChange={(e) => setUserInfo({ ...userInfo, name: e.target.value })}
           />
           <Input
             label="Phone"
@@ -30,15 +61,25 @@ export default function SignUpPage() {
             placeholder="Telefone"
             fullWidth
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            pattern="[0-9]{11}"
+            title="Por favor, digite um telefone válido com 11 dígitos"
+            required
+            disabled={disable}
+            onChange={(e) =>
+              setUserInfo({ ...userInfo, phone: e.target.value })
+            }
           />
           <Input
             label="E-mail"
-            type="text"
+            type="email"
             placeholder="E-mail"
             fullWidth
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            required
+            disabled={disable}
+            onChange={(e) =>
+              setUserInfo({ ...userInfo, email: e.target.value })
+            }
           />
           <Input
             label="Password"
@@ -46,7 +87,13 @@ export default function SignUpPage() {
             fullWidth
             placeholder="Senha"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            pattern="[A-Za-z0-9]{6,}"
+            title="Digite pelo menos 6 caracteres alfanuméricos"
+            required
+            disabled={disable}
+            onChange={(e) =>
+              setUserInfo({ ...userInfo, password: e.target.value })
+            }
           />
           <Input
             label="Password"
@@ -54,8 +101,13 @@ export default function SignUpPage() {
             fullWidth
             placeholder="Confirmar Senha"
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            disabled={disable}
+            onChange={(e) =>
+              setUserInfo({ ...userInfo, confirmPassword: e.target.value })
+            }
           />
+          {senhaInvalida && <Div><Error>As senhas não correspondem.</Error></Div>}
           <Div>
             <MiniText>
               Ja tem cadastro ?{" "}
@@ -71,6 +123,7 @@ export default function SignUpPage() {
   );
 }
 
-const Div = w.div(`w-6/12`);
-const Form = w.form(`w-6/12 flex flex-col`)
+const Div = w.div(`w-full`);
+const Form = w.form(`w-6/12 flex flex-col`);
 const A = w.span(`text-[#81C2FF]`);
+const Error = w.p(`text-sm text-[#fd1303]`)
