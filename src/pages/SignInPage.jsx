@@ -1,25 +1,58 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Container, MiniText, Title, WhiteBox } from "../assets/styles";
 import Input from "../components/Form/Input";
 import Button from "../components/Form/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { w } from "windstitch";
+import apiAuth from "../services/ApiAuth";
+import { AuthContext } from "../contexts/auth";
 
 export default function SignInPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { setUserAuth } = useContext(AuthContext);
+  const [loginInfo, setLoginInfo] = useState({
+    email: "",
+    password: "",
+  });
+  const { email, password } = loginInfo;
+  const [disable, setDisable] = useState(false);
+  const navigate = useNavigate();
+
+  async function createSession(e) {
+    e.preventDefault();
+    setDisable(true);
+
+    try {
+      const body = { email, password };
+      const user = await apiAuth.signIn(body);
+      setUserAuth(user);
+      localStorage.setItem(
+        "user",
+        JSON.stringify(user)
+      );
+      setDisable(false);
+      navigate("/");
+    } catch (err) {
+      alert(err.response.data.message);
+      setDisable(false);
+    }
+  }
+
   return (
     <Container>
       <WhiteBox>
         <Title>Login</Title>
-        <Form>
+        <Form onSubmit={createSession}>
           <Input
             label="E-mail"
             type="text"
             placeholder="E-mail"
             fullWidth
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            required
+            disabled={disable}
+            onChange={(e) =>
+              setLoginInfo({ ...loginInfo, email: e.target.value })
+            }
           />
           <Input
             label="Password"
@@ -27,7 +60,11 @@ export default function SignInPage() {
             fullWidth
             placeholder="Senha"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            required
+            disabled={disable}
+            onChange={(e) =>
+              setLoginInfo({ ...loginInfo, password: e.target.value })
+            }
           />
           <Div>
             <MiniText>
@@ -45,5 +82,5 @@ export default function SignInPage() {
 }
 
 const Div = w.div(`w-full`);
-const Form = w.form(`w-6/12 flex flex-col`)
+const Form = w.form(`w-6/12 flex flex-col`);
 const A = w.span(`text-[#81C2FF]`);

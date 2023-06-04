@@ -1,14 +1,15 @@
 import axios from "axios";
 
-function signUp(body) {
+async function signUp(body) {
   return axios.post(`${import.meta.env.VITE_APP_API_URL}/user`, body);
 }
 
-function signIn(body) {
-  return axios.post(`${import.meta.env.VITE_APP_API_URL}/sigin`, body);
+async function signIn(body) {
+  const {data:res} = await axios.post(`${import.meta.env.VITE_APP_API_URL}/sigin`, body);
+  return res
 }
 
-function signOut(token) {
+async function signOut(token) {
   axios.delete(`${import.meta.env.VITE_APP_API_URL}/sigin`, createConfig(token));
 }
 

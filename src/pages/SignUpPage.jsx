@@ -31,7 +31,7 @@ export default function SignUpPage() {
 
     const body = { name, phone, email, password };
     try {
-      const result = await apiAuth.signUp(body);
+      await apiAuth.signUp(body);
       navigate("/sign-in");
       setDisable(false);
     } catch (err) {
