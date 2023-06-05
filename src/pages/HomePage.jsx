@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Header from "../components/Header/header";
+import { Container, WhiteBox } from "../assets/styles";
 
 export default function HomePage() {
   const [test, setTest] = useState("");
@@ -14,8 +16,15 @@ export default function HomePage() {
         console.log(error.message);
       }
     }
-    feach()
+    feach();
   }, []);
 
-  return <h1>Estou na home {test}</h1>;
+  return (
+    <Container>
+      <WhiteBox>
+      <Header></Header>
+      <h1>Estou na home {test}</h1>
+      </WhiteBox>
+    </Container>
+  );
 }

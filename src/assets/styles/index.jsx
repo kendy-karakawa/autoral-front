@@ -6,12 +6,15 @@ export const Container = w.div(`
     bg-gradient-to-b from-blue-400 to-teal-400	
     flex
     items-center	
-    justify-center	    
+    justify-center
+       
 `);
 
 export const WhiteBox = w.div(
   `
-    w-6/12 bg-slate-100	
+    w-full
+    md:w-6/12 
+    bg-slate-100	
     h-screen
     flex
     flex-col
