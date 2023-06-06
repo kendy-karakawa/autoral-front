@@ -22,6 +22,6 @@ export const MiniText = w.p(`
 text-sm font-medium text-gray-500 dark:text-gray-300 mt-2
 `);
 
-export const GroupBox = w.div(`
+export const CardBox = w.div(`
 w-6/12 h-full flex flex-col items-center justify-between
 `)

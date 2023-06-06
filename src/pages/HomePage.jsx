@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Header from "../components/Header/header";
-import { Container, GroupBox, Title, WhiteBox } from "../assets/styles";
+import { Container, CardBox, Title, WhiteBox } from "../assets/styles";
 import GroupCard from "../components/Card/GroupCard";
 import Button from "../components/Form/Button";
 
@@ -11,7 +11,7 @@ export default function HomePage() {
       <WhiteBox>
         <Header />
         <Title>Encontre seu grupo</Title>
-        <GroupBox>
+        <CardBox>
           <GroupCard />
           <GroupCard />
           <GroupCard />
@@ -21,7 +21,7 @@ export default function HomePage() {
           <GroupCard />
           <GroupCard />
           <Button>Criar grupo</Button>
-        </GroupBox>
+        </CardBox>
       </WhiteBox>
     </Container>
   );
