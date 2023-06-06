@@ -18,8 +18,8 @@ export default function GroupCard() {
 }
 
 const CardContainer = w.div(`
-    w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow 
-    dark:bg-gray-800 dark:border-gray-700  p-3 flex items-center justify-between	
+    w-full max-w-sm min-w-[300px] bg-white border border-gray-200 rounded-lg shadow 
+    dark:bg-gray-800 dark:border-gray-700  p-3 flex items-center justify-between mt-2
 `);
 
 const Img = w.img(`
