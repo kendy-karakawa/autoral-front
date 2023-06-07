@@ -1,7 +1,6 @@
 import { w } from "windstitch";
 import { useState } from "react";
 import { useNavigate, Link, Navigate } from "react-router-dom";
-import { Container, MiniText, Title, WhiteBox } from "../assets/styles";
 import Input from "../components/Form/Input";
 import Button from "../components/Form/Button";
 import apiAuth from "../services/ApiAuth";
@@ -25,7 +24,7 @@ export default function SignUpPage() {
 
     if (password !== confirmPassword) {
       setDisable(false);
-      setSenhaInvalida(true)
+      setSenhaInvalida(true);
       return;
     }
 
@@ -107,7 +106,11 @@ export default function SignUpPage() {
               setUserInfo({ ...userInfo, confirmPassword: e.target.value })
             }
           />
-          {senhaInvalida && <Div><Error>As senhas não correspondem.</Error></Div>}
+          {senhaInvalida && (
+            <Div>
+              <Error>As senhas não correspondem.</Error>
+            </Div>
+          )}
           <Div>
             <MiniText>
               Ja tem cadastro ?{" "}
@@ -123,7 +126,21 @@ export default function SignUpPage() {
   );
 }
 
+const Container = w.div(`
+w-full h-screen bg-gradient-to-b from-blue-400 to-teal-400	
+flex items-center	justify-center overflow-auto	  
+`);
+const WhiteBox = w.div(`
+w-full md:w-6/12 bg-slate-100  h-full flex flex-col items-center justify-center  
+`);
+const Title = w.h1(`
+text-3xl font-bold leading-none text-gray-900 dark:text-white 
+`);
+
+const MiniText = w.p(`
+text-sm font-medium text-gray-500 dark:text-gray-300 mt-2
+`);
 const Div = w.div(`w-full`);
 const Form = w.form(`w-6/12 flex flex-col`);
 const A = w.span(`text-[#81C2FF]`);
-const Error = w.p(`text-sm text-[#fd1303]`)
+const Error = w.p(`text-sm text-[#fd1303]`);
