@@ -4,11 +4,25 @@ import Header from "../components/Header/header";
 import GroupCard from "../components/Card/GroupCard";
 import Button from "../components/Form/Button";
 import { w } from "windstitch";
+import apiGroup from "../services/ApiGroup";
+import useToken from "../hooks/useToken";
 
 export default function HomePage() {
-  const [groups, setGroups] = useState(undefined)
+  const [groups, setGroups] = useState(undefined);
+  const token = useToken();
 
-  
+  useEffect(() => {
+    async function findGroups() {
+      try {
+        const result = await apiGroup.findUserGroup(token);
+        setGroups(result);
+        console.log(result)
+      } catch (error) {
+        alert(err.response.data.message);
+      }
+    }
+    findGroups();
+  }, []);
 
   return (
     <Container>
@@ -16,14 +30,7 @@ export default function HomePage() {
       <WhiteBox>
         <Title>Encontre seu grupo</Title>
         <CardBox>
-          <GroupCard />
-          <GroupCard />
-          <GroupCard />
-          {/* <GroupCard />
-          <GroupCard />
-          <GroupCard />
-          <GroupCard />
-          <GroupCard /> */}
+          {groups && groups.map((el) => <GroupCard key={el.id} data={el} />)}
         </CardBox>
         <ButtonBox>
           <Button>Criar grupo</Button>
@@ -57,6 +64,6 @@ text-sm font-medium text-gray-500 dark:text-gray-300 mt-2
 
 const CardBox = w.div(`
 w-6/12 h-full flex flex-col items-center justify-between
-`)
+`);
 
-const ButtonBox = w.div(`w-6/12 mb-[50px]`)
+const ButtonBox = w.div(`w-6/12 mb-[50px]`);

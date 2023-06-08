@@ -20,3 +20,11 @@ const apiAuth = {
 };
 
 export default apiAuth;
+
+export function createConfig(token){
+  return{
+      headers: {
+          Authorization: `Bearer ${token}`
+      }
+  }
+}

@@ -7,7 +7,7 @@ import apiAuth from "../services/ApiAuth";
 import { AuthContext } from "../contexts/auth";
 
 export default function SignInPage() {
-  const { setUserAuth } = useContext(AuthContext);
+  const { setUserData } = useContext(AuthContext);
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -23,11 +23,11 @@ export default function SignInPage() {
     try {
       const body = { email, password };
       const user = await apiAuth.signIn(body);
-      setUserAuth(user);
-      localStorage.setItem(
-        "user",
-        JSON.stringify(user)
-      );
+      setUserData(user);
+      // localStorage.setItem(
+      //   "user",
+      //   JSON.stringify(user)
+      // );
       setDisable(false);
       navigate("/");
     } catch (err) {
