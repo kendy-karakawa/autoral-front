@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import Header from "../components/Header/header";
 import GroupCard from "../components/Card/GroupCard";
@@ -9,6 +8,7 @@ import useToken from "../hooks/useToken";
 
 export default function HomePage() {
   const [groups, setGroups] = useState(undefined);
+  const [toggle, setToggle] = useState(false)
   const token = useToken();
 
   useEffect(() => {
@@ -16,13 +16,12 @@ export default function HomePage() {
       try {
         const result = await apiGroup.findUserGroup(token);
         setGroups(result);
-        console.log(result)
-      } catch (error) {
+      } catch (err) {
         alert(err.response.data.message);
       }
     }
     findGroups();
-  }, []);
+  }, [toggle]);
 
   return (
     <Container>
@@ -30,7 +29,7 @@ export default function HomePage() {
       <WhiteBox>
         <Title>Encontre seu grupo</Title>
         <CardBox>
-          {groups && groups.map((el) => <GroupCard key={el.id} data={el} />)}
+          {groups && groups.map((el) => <GroupCard key={el.id} data={el} toggle={toggle} setToggle={setToggle} />)}
         </CardBox>
         <ButtonBox>
           <Button>Criar grupo</Button>

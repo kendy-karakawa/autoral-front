@@ -1,14 +1,39 @@
-import { HandThumbUpIcon, HandThumbDownIcon } from "@heroicons/react/24/solid";
 import { w } from "windstitch";
+import apiParticipant from "../../services/ApiParticipant";
+import useToken from "../../hooks/useToken";
 
-export default function HandleButton() {
+export default function HandleButton({participantId, groupId, toggle, setToggle, setAcceptedStatus}) {
+  const token = useToken()
+
+  async function accept(e){
+    e.preventDefault();
+    try {
+      await apiParticipant.updateAcceptedStatus(token, participantId, groupId)
+      setAcceptedStatus(true)
+    } catch (err) {
+      alert(err.response.data.message);
+    }
+  }
+
+  async function decline(e){
+    e.preventDefault();
+    try {
+      await apiParticipant.deleteParticipant(token, participantId, groupId)
+      setToggle(!toggle)
+    } catch (err) {
+      alert(err.response.data.message);
+    }
+  }
+
   return (
-    <div className="flex items-center justify-between">
-      <AceptButton type="button">Aceitar</AceptButton>
-      <DeclineButton type="button">Recusar</DeclineButton>
-    </div>
+    <Div>
+      <AcceptButton type="button" onClick={accept}>Aceitar</AcceptButton>
+      <DeclineButton type="button" onClick={decline}>Recusar</DeclineButton>
+    </Div>
   );
 }
+
+const Div = w.div(`flex items-center justify-between`)
 
 const DeclineButton  = w.button(
   `text-red-700 hover:text-white border border-red-700 hover:bg-red-800 
@@ -18,7 +43,7 @@ const DeclineButton  = w.button(
   dark:hover:bg-red-600 dark:focus:ring-red-900`
 );
 
-const AceptButton = w.button(
+const AcceptButton = w.button(
   `text-green-700 hover:text-white border border-green-700 hover:bg-green-800 
   focus:ring-4 focus:outline-none 
   focus:ring-green-300 font-medium rounded-lg 

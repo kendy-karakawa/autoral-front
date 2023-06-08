@@ -4,22 +4,32 @@ import HandleButton from "../Buttons/HandleButton";
 import { useEffect, useState } from "react";
 import apiParticipant from "../../services/ApiParticipant";
 
-export default function GroupCard({ data }) {
-  const { id:participantId, userId, groupId, accepted, Groups } = data;
-  const {name: groupName,  image:groupImage} = Groups
+export default function GroupCard({ data, toggle, setToggle }) {
+  const { id: participantId, userId, groupId, accepted, Groups } = data;
+  const { name: groupName, image: groupImage } = Groups;
   const [acceptedStatus, setAcceptedStatus] = useState(accepted);
 
-
+  
   return (
     <CardContainer>
       <Div>
-        <Img src={groupImage}/>
+        <Img src={groupImage} />
         <Div>
           <Groupname>{groupName}</Groupname>
         </Div>
       </Div>
       <Div>
-        {acceptedStatus ? <JoinButton /> : <HandleButton />}
+        {acceptedStatus ? (
+          <JoinButton />
+        ) : (
+          <HandleButton
+            participantId={participantId}
+            groupId={groupId}
+            toggle={toggle}
+            setToggle={setToggle}
+            setAcceptedStatus={setAcceptedStatus}
+          />
+        )}
       </Div>
     </CardContainer>
   );
