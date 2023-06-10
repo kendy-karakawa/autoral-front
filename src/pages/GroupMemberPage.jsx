@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import Button from "../components/Form/Button";
-import Input from "../components/Form/Input";
 import Header from "../components/Header/header";
 import { w } from "windstitch";
 import { useParams } from "react-router-dom";
 import useToken from "../hooks/useToken";
 import apiParticipant from "../services/ApiParticipant";
 import UserCard from "../components/Card/UserCard";
+import UserSeach from "../components/UserSearch/UserSeatch";
 
 export default function GroupMemberPage() {
   const [members, setMembers] = useState([]);
+  const [toggle, setToggle] = useState(true)
   const { groupId } = useParams();
   const token = useToken();
 
@@ -19,12 +19,12 @@ export default function GroupMemberPage() {
         const result = await apiParticipant.getGroupParticipant(token, groupId);
         setMembers(result);
       } catch (err) {
-        console.log(err.response.data)
+        console.log(err.response.data.message);
         //alert(err.response.data.message)
       }
     }
-    getMembers()
-  }, []);
+    getMembers();
+  }, [toggle]);
 
   return (
     <Container>
@@ -32,25 +32,11 @@ export default function GroupMemberPage() {
       <WhiteBox>
         <Title>Membros</Title>
         <ul items={members.length}>
-          {members.map((el)=> 
-          <UserCard 
-          key={el.id}
-          data={el}
-          />)}
+          {members.map((el) => (
+            <UserCard key={el.id} data={el}  />
+          ))}
         </ul>
-        <Form>
-          <Input
-            label="name"
-            type="text"
-            placeholder="Nome"
-            // fullWidth
-            // value={name}
-            // required
-            // disabled={disable}
-            // onChange={(e) => setName(e.target.value)}
-          />
-          <Button>Criar grupo</Button>
-        </Form>
+        <UserSeach members={members} groupId={groupId} token={token} toggle={toggle} setToggle={setToggle}/>
       </WhiteBox>
     </Container>
   );
@@ -67,23 +53,10 @@ const Container = w.div(`
 `);
 
 const WhiteBox = w.div(`
-w-full md:w-6/12 bg-slate-100 min-h-full flex flex-col items-center justify-start  
+w-full  md:w-6/12 bg-slate-100 min-h-full flex flex-col items-center justify-start  
 `);
-
-const Form = w.form(
-  `w-6/12 flex min-h-[50%] flex-col items-center justify-between `
-);
 
 const Title = w.h1(`
 text-3xl font-bold leading-none text-gray-900 dark:text-white mt-[140px] mb-[20px]
 `);
 
-const MiniText = w.p(`
-text-sm font-medium text-gray-500 dark:text-gray-300 mt-2
-`);
-
-const CardBox = w.div(`
-w-6/12 h-full flex flex-col items-center justify-between
-`);
-
-const ButtonBox = w.div(`w-6/12 mb-[50px]`);
