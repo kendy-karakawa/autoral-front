@@ -5,11 +5,13 @@ import Button from "../components/Form/Button";
 import { w } from "windstitch";
 import apiGroup from "../services/ApiGroup";
 import useToken from "../hooks/useToken";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function HomePage() {
   const [groups, setGroups] = useState(undefined);
-  const [toggle, setToggle] = useState(false)
+  const [toggle, setToggle] = useState(false);
   const token = useToken();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function findGroups() {
@@ -18,6 +20,7 @@ export default function HomePage() {
         setGroups(result);
       } catch (err) {
         alert(err.response.data.message);
+        if(err.response.status === 401) navigate("/sign-in")
       }
     }
     findGroups();
@@ -29,10 +32,20 @@ export default function HomePage() {
       <WhiteBox>
         <Title>Encontre seu grupo</Title>
         <CardBox>
-          {groups && groups.map((el) => <GroupCard key={el.id} data={el} toggle={toggle} setToggle={setToggle} />)}
+          {groups &&
+            groups.map((el) => (
+              <GroupCard
+                key={el.id}
+                data={el}
+                toggle={toggle}
+                setToggle={setToggle}
+              />
+            ))}
         </CardBox>
         <ButtonBox>
-          <Button>Criar grupo</Button>
+          <Link to={"/create-group"}>
+            <Button>Criar grupo</Button>
+          </Link>
         </ButtonBox>
       </WhiteBox>
     </Container>

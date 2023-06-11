@@ -60,7 +60,7 @@ export default function UserSeach({ members, groupId, token, toggle, setToggle})
         await apiParticipant.createParticipants(token, groupId, body)
         setAddUserList([])
         setUserList([])
-        setToggle(!toggle)
+        setToggle(prev=> !prev)
     } catch (err) {
         console.log(err.response.data.message);
 

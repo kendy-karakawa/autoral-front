@@ -24,10 +24,6 @@ export default function SignInPage() {
       const body = { email, password };
       const user = await apiAuth.signIn(body);
       setUserData(user);
-      // localStorage.setItem(
-      //   "user",
-      //   JSON.stringify(user)
-      // );
       setDisable(false);
       navigate("/");
     } catch (err) {
@@ -45,7 +41,6 @@ export default function SignInPage() {
             label="E-mail"
             type="text"
             placeholder="E-mail"
-            fullWidth
             value={email}
             required
             disabled={disable}
@@ -56,7 +51,6 @@ export default function SignInPage() {
           <Input
             label="Password"
             type="password"
-            fullWidth
             placeholder="Senha"
             value={password}
             required

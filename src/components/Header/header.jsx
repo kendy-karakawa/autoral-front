@@ -1,33 +1,45 @@
 import { w } from "windstitch";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import useData from "../../hooks/useData";
 
 export default function Header() {
+  const user = useData();
+  const { groupId } = useParams();
+
   return (
     <Navbar>
       <Container>
         <LeftBox>
-          <Avatar
-            src="https://ionicframework.com/docs/img/demos/avatar.svg"
-            alt="avatar"
-          />
-          <UserName>user.name</UserName>
+          <Link to={"/"}>
+          <Avatar src={user.image} alt="avatar" />
+          </Link>
+          <UserName>{user.name}</UserName>
+          
         </LeftBox>
-        <MiddleBox>
+        {groupId && <MiddleBox>
           <Ul>
             <li>
-              <A>About</A>
+              <Link to={`/group/${groupId}/`}>
+                <A>Home</A>
+              </Link>
             </li>
             <li>
-              <A>About</A>
+              <Link to={`/group/${groupId}/`}>
+                <A>Home</A>
+              </Link>
             </li>
             <li>
-              <A>About</A>
+              <Link to={`/group/${groupId}/`}>
+                <A>Home</A>
+              </Link>
             </li>
             <li>
-              <A>About</A>
+              <Link to={`/group/${groupId}/member`}>
+                <A>Membros</A>
+              </Link>
             </li>
           </Ul>
-        </MiddleBox>
+        </MiddleBox>}
       </Container>
     </Navbar>
   );
@@ -52,4 +64,6 @@ const UserName = w.span(
   `self-center text-2xl font-semibold whitespace-nowrap dark:text-white ml-2`
 );
 const LeftBox = w.div(`flex items-center`);
-const MiddleBox = w.div(`items-center justify-between hidden w-full md:flex md:w-auto md:order-1`)
+const MiddleBox = w.div(
+  `items-center justify-between hidden w-full md:flex md:w-auto md:order-1`
+);

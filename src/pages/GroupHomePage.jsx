@@ -8,7 +8,6 @@ import { useParams } from "react-router-dom";
 export default function GroupHomePage() {
   const {groupId} = useParams()
 
-  console.log(groupId)
   return (
     <Container>
       <Header />

@@ -20,7 +20,7 @@ export default function GroupCard({ data, toggle, setToggle }) {
       </Div>
       <Div>
         {acceptedStatus ? (
-          <JoinButton />
+          <JoinButton groupId={groupId} />
         ) : (
           <HandleButton
             participantId={participantId}

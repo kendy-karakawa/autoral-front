@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header/header";
 import { w } from "windstitch";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useToken from "../hooks/useToken";
 import apiParticipant from "../services/ApiParticipant";
 import UserCard from "../components/Card/UserCard";
@@ -12,15 +12,17 @@ export default function GroupMemberPage() {
   const [toggle, setToggle] = useState(true)
   const { groupId } = useParams();
   const token = useToken();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getMembers() {
       try {
         const result = await apiParticipant.getGroupParticipant(token, groupId);
+        console.log(result)
         setMembers(result);
       } catch (err) {
         console.log(err.response.data.message);
-        //alert(err.response.data.message)
+        if(err.response.status === 401) navigate("/sign-in")
       }
     }
     getMembers();
