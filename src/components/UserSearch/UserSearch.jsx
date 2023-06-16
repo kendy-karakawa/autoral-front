@@ -1,4 +1,4 @@
-import { w, wx } from "windstitch";
+import { w } from "windstitch";
 import { useMemo, useState } from "react";
 import { DebounceInput } from "react-debounce-input";
 import Button from "../Form/Button";

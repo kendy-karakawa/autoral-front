@@ -24,7 +24,7 @@ export default function Header() {
               </Link>
             </li>
             <li>
-              <Link to={`/group/${groupId}/`}>
+              <Link to={`/group/${groupId}/expense`}>
                 <A>Adicionar</A>
               </Link>
             </li>

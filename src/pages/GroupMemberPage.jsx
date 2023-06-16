@@ -5,11 +5,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import useToken from "../hooks/useToken";
 import apiParticipant from "../services/ApiParticipant";
 import UserCard from "../components/Card/UserCard";
-import UserSeach from "../components/UserSearch/UserSeatch";
+import UserSeach from "../components/UserSearch/UserSearch";
 
 export default function GroupMemberPage() {
   const [members, setMembers] = useState([]);
-  const [toggle, setToggle] = useState(true)
+  const [toggle, setToggle] = useState(true);
   const { groupId } = useParams();
   const token = useToken();
   const navigate = useNavigate();
@@ -18,11 +18,11 @@ export default function GroupMemberPage() {
     async function getMembers() {
       try {
         const result = await apiParticipant.getGroupParticipant(token, groupId);
-        console.log(result)
+        console.log(result);
         setMembers(result);
       } catch (err) {
         console.log(err.response.data.message);
-        if(err.response.status === 401) navigate("/sign-in")
+        if (err.response.status === 401) navigate("/sign-in");
       }
     }
     getMembers();
@@ -35,10 +35,16 @@ export default function GroupMemberPage() {
         <Title>Membros</Title>
         <ul items={members.length}>
           {members.map((el) => (
-            <UserCard key={el.id} data={el}  />
+            <UserCard key={el.id} data={el} />
           ))}
         </ul>
-        <UserSeach members={members} groupId={groupId} token={token} toggle={toggle} setToggle={setToggle}/>
+        <UserSeach
+          members={members}
+          groupId={groupId}
+          token={token}
+          toggle={toggle}
+          setToggle={setToggle}
+        />
       </WhiteBox>
     </Container>
   );
@@ -61,4 +67,3 @@ w-full  md:w-6/12 bg-slate-100 min-h-full flex flex-col items-center justify-sta
 const Title = w.h1(`
 text-3xl font-bold leading-none text-gray-900 dark:text-white mt-[140px] mb-[20px]
 `);
-
