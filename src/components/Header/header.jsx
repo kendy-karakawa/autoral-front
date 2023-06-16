@@ -20,17 +20,17 @@ export default function Header() {
           <Ul>
             <li>
               <Link to={`/group/${groupId}/`}>
-                <A>Home</A>
+                <A>Historico</A>
               </Link>
             </li>
             <li>
               <Link to={`/group/${groupId}/`}>
-                <A>Home</A>
+                <A>Adicionar</A>
               </Link>
             </li>
             <li>
               <Link to={`/group/${groupId}/`}>
-                <A>Home</A>
+                <A>Pagamento</A>
               </Link>
             </li>
             <li>

@@ -5,28 +5,28 @@ import Header from "../components/Header/header";
 import { w } from "windstitch";
 import { useParams } from "react-router-dom";
 
-export default function GroupHomePage() {
+export default function GroupHistoricPage() {
   const {groupId} = useParams()
 
   return (
     <Container>
       <Header />
       <WhiteBox>
-        <Title>Crie seu grupo</Title>
-        <CardBox></CardBox>
+        <Title>Historico</Title>
+        {/* <CardBox></CardBox>
         <Form>
           <Input
             label="name"
             type="text"
             placeholder="Nome"
-            // fullWidth
-            // value={name}
-            // required
-            // disabled={disable}
-            // onChange={(e) => setName(e.target.value)}
+            fullWidth
+            value={name}
+            required
+            disabled={disable}
+            onChange={(e) => setName(e.target.value)}
           />
           <Button>Criar grupo</Button>
-        </Form>
+        </Form> */}
       </WhiteBox>
     </Container>
   );

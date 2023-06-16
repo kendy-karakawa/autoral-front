@@ -8,7 +8,7 @@ import useToken from "../hooks/useToken";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function HomePage() {
-  const [groups, setGroups] = useState(undefined);
+  const [groups, setGroups] = useState([]);
   const [toggle, setToggle] = useState(false);
   const token = useToken();
   const navigate = useNavigate();
@@ -32,6 +32,7 @@ export default function HomePage() {
       <WhiteBox>
         <Title>Encontre seu grupo</Title>
         <CardBox>
+          {groups.length === 0 && <p>Nenhum grupo encontrado!</p>}
           {groups &&
             groups.map((el) => (
               <GroupCard
