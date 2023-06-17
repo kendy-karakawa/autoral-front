@@ -3,26 +3,8 @@ import { w } from "windstitch";
 import SelectUserCard from "../Card/SelectUserCard";
 import apiParticipant from "../../services/ApiParticipant";
 
-export default function SplitMember({ token, groupId}) {
-  const [unselectMembers, setUnselectMembers] = useState([]);
-  const [selectedMembers, setSelectedMembers] = useState([]);
+export default function SplitMember({ token, groupId, selectedMembers, setSelectedMembers, unselectMembers, setUnselectMembers}) {
 
- useEffect(() => {
-    async function getMembers() {
-      try {
-        const result = await apiParticipant.getGroupParticipant(token, groupId);
-        //console.log(result);
-        setUnselectMembers(result);
-      } catch (err) {
-        console.log(err.response.data.message);
-        //console.log(err);
-        if (err.response.status === 401) navigate("/sign-in");
-      }
-    }
-    
-    getMembers();
-    
-  }, []);
     
   function addUser(user) {
     const removeUser = unselectMembers.filter((item) => item.id !== user.id)

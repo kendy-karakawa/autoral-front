@@ -1,22 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../components/Form/Input";
 import Header from "../components/Header/header";
 import { w } from "windstitch";
 import { useParams } from "react-router-dom";
 import useToken from "../hooks/useToken";
 import SplitMember from "../components/SplitMember/SplitMember";
+import apiParticipant from "../services/ApiParticipant";
+import Button from "../components/Form/Button";
+import apiExpense from "../services/ApiExpense";
 
 export default function GroupExpensePage() {
   const { groupId } = useParams();
+  const [groupMembers, sergroupMembers] = useState([])
   const [description, setDescripition] = useState("");
-  const [totalValue, setTotalValue] = useState(undefined);
+  const [value, setValue] = useState(undefined);
   const [selectAll, setSelectAll] = useState(false);
   const [selectSome, setSelectSome] = useState(false);
+  const [selectedMembers, setSelectedMembers] = useState([]);
+  const [unselectMembers, setUnselectMembers] = useState([]);
   const token = useToken();
+
+  useEffect(() => {
+    async function getMembers() {
+      try {
+        const result = await apiParticipant.getGroupParticipant(token, groupId);
+        console.log(result);
+        sergroupMembers(result)
+        setUnselectMembers(result);
+      } catch (err) {
+        //console.log(err.response.data.message);
+        console.log(err);
+        if (err.response.status === 401) navigate("/sign-in");
+      }
+    }
+
+    getMembers();
+  }, []);
 
   function handleSelectAll() {
     setSelectSome(false);
     setSelectAll(!selectAll);
+    setSelectedMembers(unselectMembers)
   }
 
   function handleSelectSome() {
@@ -24,12 +48,43 @@ export default function GroupExpensePage() {
     setSelectSome(!selectSome);
   }
 
+  async function onSubmit(e) {
+    e.preventDefault();
+    if (selectedMembers.length === 0){
+      alert("Selecione pelo menos um membro")
+      return
+    }
+    try {
+      const formatedGroupId = Number(groupId)
+      const totalValue = value * 100;
+      const participantsIds = selectedMembers.map((item) => ({ id: item.id }));
+      const body = {
+        name: description,
+        groupId: formatedGroupId,
+        totalValue,
+        participantsIds,
+      };
+      
+      console.log(body)
+      await apiExpense.splitExpenseWithMembers(token, body);
+
+      setDescripition("")
+      setValue("")
+      setSelectedMembers([])
+      setUnselectMembers(groupMembers)
+      setSelectAll(false)
+      setSelectSome(false)
+    } catch (err) {
+      console.log(err.response.data.message);
+    }
+  }
+
   return (
     <Container>
       <Header />
       <WhiteBox>
         <Title>Adicionar despesa</Title>
-        <Form>
+        <Form onSubmit={onSubmit}>
           <Input
             label="description"
             type="text"
@@ -39,14 +94,14 @@ export default function GroupExpensePage() {
             onChange={(e) => setDescripition(e.target.value)}
           />
           <Input
-            label="totalValue"
+            label="value"
             type="number"
             step="0.01"
             min="0.01"
             placeholder="Valor"
-            value={totalValue}
+            value={value}
             required
-            onChange={(e) => setTotalValue(e.target.value)}
+            onChange={(e) => setValue(e.target.value)}
           />
           <CheckBoxContainer>
             <CheckBoxDiv>
@@ -66,7 +121,18 @@ export default function GroupExpensePage() {
               <Label>Selecionar membros para a divisão</Label>
             </CheckBoxDiv>
           </CheckBoxContainer>
-          {selectSome && <SplitMember token={token} groupId={groupId} />}
+          {selectSome && (
+            <SplitMember
+              token={token}
+              groupId={groupId}
+              selectedMembers={selectedMembers}
+              setSelectedMembers={setSelectedMembers}
+              unselectMembers={unselectMembers}
+              setUnselectMembers={setUnselectMembers}
+            />
+          )}
+
+          <Button>Enviar</Button>
         </Form>
       </WhiteBox>
     </Container>
