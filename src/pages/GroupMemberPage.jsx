@@ -18,7 +18,7 @@ export default function GroupMemberPage() {
     async function getMembers() {
       try {
         const result = await apiParticipant.getGroupParticipant(token, groupId);
-        console.log(result);
+        //console.log(result);
         setMembers(result);
       } catch (err) {
         console.log(err.response.data.message);
