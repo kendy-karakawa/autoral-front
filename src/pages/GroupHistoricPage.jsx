@@ -67,7 +67,7 @@ const Container = w.div(`
 `);
 
 const WhiteBox = w.div(`
- w-full md:w-6/12 bg-slate-100 min-h-full flex flex-col items-center justify-start  
+ w-full md:w-6/12 bg-[#f0f9ff] min-h-full flex flex-col items-center justify-start  
 `);
 
 const OlBox = w.div(`w-10/12 flex min-h-[50%] `);

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ColorRing } from "react-loader-spinner";
 import apiExpense from "../../services/ApiExpense";
 
-export default function DeleteButton({expenseId, token, setToggle}) {
+export default function DeleteButton({ expenseId, token, setToggle }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [deleteIsLoading, setDeleteIsLoading] = useState(false);
 
@@ -15,17 +15,17 @@ export default function DeleteButton({expenseId, token, setToggle}) {
     setDeleteIsLoading(true);
     e.preventDefault();
     try {
-      await apiExpense.deleteExpense(token, expenseId)
+      await apiExpense.deleteExpense(token, expenseId);
       setDeleteIsLoading(false);
       setModalIsOpen(false);
-      setToggle(prev=> !prev)
+      setToggle((prev) => !prev);
     } catch (err) {
       console.log(err.response.data.message);
     }
-  }
+  };
 
   return (
-    <> 
+    <>
       <button onClick={handleOpenModal}>
         <TrashIcon className="h-6 w-6 " />
       </button>
@@ -61,25 +61,30 @@ export default function DeleteButton({expenseId, token, setToggle}) {
 }
 
 const ModalContainer = w.div(`
-z-3 fixed inset-0 flex items-center justify-center bg-white bg-opacity-90
+z-50 fixed inset-0 flex items-center justify-center bg-white bg-opacity-90
 `);
 
 const ModalBox = w.div(`
-absolute top-[calc(50%-130px)] right-[calc(50%-300px)] bg-gray-800 rounded-[50px] w-[600px] h-[260px] flex items-center justify-center flex-col
+relative bg-blue-500 rounded-lg shadow w-[380px] h-[100px]
 `);
 
 const H2 = w.h2(`
-w-[338px] text-3xl font-bold text-white mb-40 text-center font-lato
+mb-5 text-lg font-normal text-gray-500  
+text-3xl font-bold text-white mb-40 text-center font-lato
 `);
 
 const ButtonBox = w.div(`
-  flex justify-evenly w-[338px]
+  flex justify-evenly w-[380px]
 `);
 
 const No = w.button(`
-w-[137px] h-[37px] rounded-[5px] font-lato text-xl font-bold text-blue-500 bg-white hover:cursor-pointer 
-`);
+text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 
+rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 
+dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 
+dark:focus:ring-gray-600`);
 
 const Yes = w.button(`
-w-[137px] h-[37px] rounded-[5px] font-lato text-xl font-bold text-white bg-blue-500 hover:cursor-pointer 
+text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 
+dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 
+text-center mr-2
 `);
