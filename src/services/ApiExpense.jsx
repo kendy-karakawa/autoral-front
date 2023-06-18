@@ -11,16 +11,25 @@ async function splitExpenseWithMembers(token, body) {
 }
 
 async function getExpenses(token, groupId) {
-  const {data:res} = await axios.get(
+  const { data: res } = await axios.get(
     `${import.meta.env.VITE_APP_API_URL}/expense/${groupId}`,
     createConfig(token)
   );
   return res;
 }
 
+async function deleteExpense(token, expenseId) {
+  await axios.delete(
+    `${import.meta.env.VITE_APP_API_URL}/expense/${expenseId}`,
+    createConfig(token)
+  );
+  return
+}
+
 const apiExpense = {
   splitExpenseWithMembers,
-  getExpenses
+  getExpenses,
+  deleteExpense
 };
 
 export default apiExpense;

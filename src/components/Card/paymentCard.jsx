@@ -3,7 +3,7 @@ import EditButton from "../Buttons/EditButton";
 import DeleteButton from "../Buttons/DeleteButton";
 import { maskDate } from "../../utils/masks";
 
-export default function PaymentCard({ data, memberQty, userId}) {
+export default function PaymentCard({ data, memberQty, userId, token, setToggle}) {
   const {expenseId, name, value, paidBy, createdAt, divisions} = data
   
   const formattedValue = (value/100).toLocaleString('pt-BR',{
@@ -27,7 +27,7 @@ export default function PaymentCard({ data, memberQty, userId}) {
         </P>
         <ButtonBox>
         {userId === paidBy.userId && <EditButton expenseId={expenseId}/>}
-        {userId === paidBy.userId && <DeleteButton expenseId={expenseId}/>}
+        {userId === paidBy.userId && <DeleteButton expenseId={expenseId} token={token} setToggle={setToggle}/>}
         </ButtonBox>
     </CardContainer>
   );

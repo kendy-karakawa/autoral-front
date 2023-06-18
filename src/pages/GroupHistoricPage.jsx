@@ -13,6 +13,7 @@ export default function GroupHistoricPage() {
   const user = useData()
   const [expenses, setExpenses] = useState([]);
   const [memberQty, setMemberQty] = useState(0)
+  const [toggle, setToggle] = useState(false)
 
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function GroupHistoricPage() {
     }
 
     getAllExpenses();
-  }, []);
+  }, [toggle]);
 
   return (
     <Container>
@@ -44,6 +45,8 @@ export default function GroupHistoricPage() {
             data={el}
             memberQty={memberQty}
             userId={user.id}
+            token={token}
+            setToggle={setToggle}
             />))}
             
           </CardBox>
