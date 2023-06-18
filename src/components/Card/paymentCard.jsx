@@ -2,9 +2,15 @@ import { w } from "windstitch";
 import JoinButton from "../Buttons/EditButton";
 import DeleteButton from "../Buttons/DeleteButton";
 
-export default function PaymentCard({ }) {
+export default function PaymentCard({ data}) {
+  const {id, name, value, paidBy, createdAt} = data
   
-  
+  //prisa pegar os dados do participante como nome e img atravez do paidBy
+    //se o usuario for o mesmo do paidBy, exibir os botoes de editar e deletar 
+  // precisa formatar a data para dia/mes/ano
+  // precisa pegar quem participol da divisao 
+    // se for com todos => colocar com todos 
+    // se nao for com todos, listar os membros
 
   return (
     <CardContainer>

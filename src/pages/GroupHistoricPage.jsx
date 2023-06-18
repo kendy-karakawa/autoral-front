@@ -1,12 +1,30 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import Header from "../components/Header/header";
 import { w } from "windstitch";
 import { useParams } from "react-router-dom";
 import PaymentCard from "../components/Card/paymentCard";
+import apiExpense from "../services/ApiExpense";
+import useToken from "../hooks/useToken";
 
 export default function GroupHistoricPage() {
   const { groupId } = useParams();
+  const token = useToken();
+  const [expenses, setExpenses] = useState([]);
+
+  useEffect(() => {
+    async function getAllExpenses() {
+      try {
+        const result = await apiExpense.getExpenses(token, groupId);
+        console.log(result)
+        setExpenses(result.expenses);
+      } catch (error) {
+        console.log(err.response.data.message);
+        if (err.response.status === 401) navigate("/sign-in");
+      }
+    }
+
+    getAllExpenses();
+  }, []);
 
   return (
     <Container>
@@ -15,9 +33,12 @@ export default function GroupHistoricPage() {
         <Title>Historico</Title>
         <OlBox>
           <CardBox>
-            <PaymentCard />
-            <PaymentCard />
-            <PaymentCard />
+            {expenses.map((el)=> (
+            <PaymentCard 
+            key={el.id} 
+            data={el}
+            />))}
+            
           </CardBox>
         </OlBox>
       </WhiteBox>
@@ -47,4 +68,3 @@ text-3xl font-bold leading-none text-gray-900 dark:text-white mt-[140px] mb-[20p
 
 const CardBox = w.ol(`
 relative border-l border-gray-400`);
-

@@ -23,7 +23,7 @@ export default function GroupExpensePage() {
   useEffect(() => {
     async function getMembers() {
       try {
-        const result = await apiParticipant.getGroupParticipant(token, groupId);
+        const result = await apiParticipant.getGroupAcceptedParticipant(token, groupId);
         console.log(result);
         sergroupMembers(result)
         setUnselectMembers(result);

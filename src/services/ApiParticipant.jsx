@@ -9,6 +9,14 @@ async function getGroupParticipant(token, groupId) {
   return res;
 }
 
+async function getGroupAcceptedParticipant(token, groupId) {
+  const { data: res } = await axios.get(
+    `${import.meta.env.VITE_APP_API_URL}/participant/accepted/${groupId}`,
+    createConfig(token)
+  );
+  return res;
+}
+
 async function createParticipants (token, groupId, body){
   await axios.post(
     `${import.meta.env.VITE_APP_API_URL}/participant/${groupId}`,
@@ -41,7 +49,8 @@ const apiParticipant = {
   updateAcceptedStatus,
   deleteParticipant,
   getGroupParticipant,
-  createParticipants
+  createParticipants,
+  getGroupAcceptedParticipant
 };
 
 export default apiParticipant;
