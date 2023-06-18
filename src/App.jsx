@@ -7,6 +7,7 @@ import CreateGroupPage from "./pages/CreateGroupPage";
 import GroupMemberPage from "./pages/GroupMemberPage";
 import GroupHistoricPage from "./pages/GroupHistoricPage";
 import GroupExpensePage from "./pages/GroupExpensePage";
+import GroupResumePage from "./pages/GroupResumePage";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/group/:groupId" element={<GroupHistoricPage />} />
           <Route path="/group/:groupId/member" element={<GroupMemberPage />} />
           <Route path="/group/:groupId/expense" element={<GroupExpensePage />} />
+          <Route path="/group/:groupId/resume" element={<GroupResumePage />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

@@ -37,7 +37,7 @@ export default function GroupHistoricPage() {
       <Header />
       <WhiteBox>
         <Title>Historico</Title>
-        <OlBox>
+        <>
           <CardBox>
             {expenses.map((el)=> (
             <PaymentCard 
@@ -50,7 +50,7 @@ export default function GroupHistoricPage() {
             />))}
             
           </CardBox>
-        </OlBox>
+        </>
       </WhiteBox>
     </Container>
   );
@@ -67,14 +67,15 @@ const Container = w.div(`
 `);
 
 const WhiteBox = w.div(`
- w-full md:w-6/12 bg-[#f0f9ff] min-h-full flex flex-col items-center justify-start  
+ w-full md:w-6/12 bg-slate-100 min-h-full flex flex-col items-center justify-start  
 `);
 
-const OlBox = w.div(`w-10/12 flex min-h-[50%] `);
+const Box = w.div(`w-10/12 flex min-h-[50%] `);
 
 const Title = w.h1(`
 text-3xl font-bold leading-none text-gray-900 dark:text-white mt-[140px] mb-[20px]
 `);
 
 const CardBox = w.ol(`
-relative border-l border-gray-400`);
+relative border-l border-gray-400 
+`);

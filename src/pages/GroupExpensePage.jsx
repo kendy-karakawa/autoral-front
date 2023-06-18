@@ -13,7 +13,7 @@ export default function GroupExpensePage() {
   const { groupId } = useParams();
   const [groupMembers, sergroupMembers] = useState([])
   const [description, setDescripition] = useState("");
-  const [value, setValue] = useState(undefined);
+  const [value, setValue] = useState(0);
   const [selectAll, setSelectAll] = useState(false);
   const [selectSome, setSelectSome] = useState(false);
   const [selectedMembers, setSelectedMembers] = useState([]);
