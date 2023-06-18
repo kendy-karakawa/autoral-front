@@ -1,37 +1,42 @@
 import { w } from "windstitch";
-import JoinButton from "../Buttons/EditButton";
+import EditButton from "../Buttons/EditButton";
 import DeleteButton from "../Buttons/DeleteButton";
+import { maskDate } from "../../utils/masks";
 
-export default function PaymentCard({ data}) {
-  const {id, name, value, paidBy, createdAt} = data
+export default function PaymentCard({ data, memberQty, userId}) {
+  const {expenseId, name, value, paidBy, createdAt, divisions} = data
   
-  //prisa pegar os dados do participante como nome e img atravez do paidBy
-    //se o usuario for o mesmo do paidBy, exibir os botoes de editar e deletar 
-  // precisa formatar a data para dia/mes/ano
-  // precisa pegar quem participol da divisao 
-    // se for com todos => colocar com todos 
-    // se nao for com todos, listar os membros
+  const formattedValue = (value/100).toLocaleString('pt-BR',{
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
+
+  const divisionMembers = divisions.map(obj => obj.name).join(', ')
+  
+  const date = createdAt.split('T')[0]
+
+  
 
   return (
     <CardContainer>
-        <Img></Img>
-        <Time>February 2022</Time>
-        <Title>Kendy pagou R$ 500,00 para Transporte</Title>
-        <P>Dividiu igualmente com todos</P>
+        <Img src={paidBy.image}/>
+        <Time>{maskDate(date)}</Time>
+        <Title>{`${paidBy.name} pagou R$ ${formattedValue} para ${name}`}</Title>
+        <P>Dividido entre: 
+          <Names> {memberQty === divisions.length ? "Todos" : divisionMembers}</Names>
+        </P>
         <ButtonBox>
-        <JoinButton/>
-        <DeleteButton/>
+        {userId === paidBy.userId && <EditButton expenseId={expenseId}/>}
+        {userId === paidBy.userId && <DeleteButton expenseId={expenseId}/>}
         </ButtonBox>
-        
-        {/* <a href="#" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:outline-none focus:ring-gray-200 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">Learn more <svg class="w-3 h-3 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></a> */}
     </CardContainer>
   );
 }
 
 const CardContainer = w.li(`mb-6 ml-6`);
 
-const Img = w.div(`
-absolute w-10 h-10 bg-gray-200 rounded-full mt-1.5 -left-5 border border-white 
+const Img = w.img(`
+absolute w-8 h-8 bg-gray-200 rounded-full ring-2 mt-1.5 -left-4 border border-white 
 dark:border-gray-900 dark:bg-gray-700
 `)
 
@@ -45,6 +50,11 @@ text-lg font-semibold text-gray-900 dark:text-white
 
 const P = w.p(`
 mb-2 text-base font-normal text-gray-500 dark:text-gray-400   
+`)
+
+const Names = w.span(`
+mb-2 text-base font-bold text-gray-500 dark:text-gray-400   
+
 `)
 
 const ButtonBox = w.div(`flex items-center justify-between w-20 `);

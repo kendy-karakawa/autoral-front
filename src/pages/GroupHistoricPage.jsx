@@ -5,18 +5,23 @@ import { useParams } from "react-router-dom";
 import PaymentCard from "../components/Card/paymentCard";
 import apiExpense from "../services/ApiExpense";
 import useToken from "../hooks/useToken";
+import useData from "../hooks/useData";
 
 export default function GroupHistoricPage() {
   const { groupId } = useParams();
   const token = useToken();
+  const user = useData()
   const [expenses, setExpenses] = useState([]);
+  const [memberQty, setMemberQty] = useState(0)
+
 
   useEffect(() => {
     async function getAllExpenses() {
       try {
         const result = await apiExpense.getExpenses(token, groupId);
         console.log(result)
-        setExpenses(result.expenses);
+        setExpenses(result.expenses)
+        setMemberQty(result.quantity)
       } catch (error) {
         console.log(err.response.data.message);
         if (err.response.status === 401) navigate("/sign-in");
@@ -35,8 +40,10 @@ export default function GroupHistoricPage() {
           <CardBox>
             {expenses.map((el)=> (
             <PaymentCard 
-            key={el.id} 
+            key={el.expenseId} 
             data={el}
+            memberQty={memberQty}
+            userId={user.id}
             />))}
             
           </CardBox>
