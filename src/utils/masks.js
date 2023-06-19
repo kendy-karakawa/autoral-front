@@ -8,5 +8,13 @@ function maskDate(dateString) {
   return `${dayOfWeek.charAt(0).toUpperCase()}${dayOfWeek.slice(1)}`;
 }
 
+function maskValue(value){
+  const formattedValue = (value/100).toLocaleString('pt-BR',{
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
+  return formattedValue
+}
 
-export { maskDate };
+
+export { maskDate, maskValue };

@@ -1,15 +1,10 @@
 import { w } from "windstitch";
 import EditButton from "../Buttons/EditButton";
 import DeleteButton from "../Buttons/DeleteButton";
-import { maskDate } from "../../utils/masks";
+import { maskDate, maskValue } from "../../utils/masks";
 
 export default function PaymentCard({ data, memberQty, userId, token, setToggle}) {
   const {expenseId, name, value, paidBy, createdAt, divisions} = data
-  
-  const formattedValue = (value/100).toLocaleString('pt-BR',{
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  })
 
   const divisionMembers = divisions.map(obj => obj.name).join(', ')
   
@@ -21,7 +16,7 @@ export default function PaymentCard({ data, memberQty, userId, token, setToggle}
     <CardContainer>
         <Img src={paidBy.image}/>
         <Time>{maskDate(date)}</Time>
-        <Title>{`${paidBy.name} pagou R$ ${formattedValue} para ${name}`}</Title>
+        <Title>{`${paidBy.name} pagou R$ ${maskValue(value)} para ${name}`}</Title>
         <P>Dividido entre: 
           <Names> {memberQty === divisions.length ? "Todos" : divisionMembers}</Names>
         </P>

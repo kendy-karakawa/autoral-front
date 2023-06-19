@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header/header";
 import { w } from "windstitch";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PaymentCard from "../components/Card/paymentCard";
 import apiExpense from "../services/ApiExpense";
 import useToken from "../hooks/useToken";
 import useData from "../hooks/useData";
 
 export default function GroupHistoricPage() {
+  const navigate = useNavigate();
   const { groupId } = useParams();
   const token = useToken();
   const user = useData()
@@ -23,7 +24,7 @@ export default function GroupHistoricPage() {
         console.log(result)
         setExpenses(result.expenses)
         setMemberQty(result.quantity)
-      } catch (error) {
+      } catch (err) {
         console.log(err.response.data.message);
         if (err.response.status === 401) navigate("/sign-in");
       }

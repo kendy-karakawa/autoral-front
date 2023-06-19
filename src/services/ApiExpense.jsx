@@ -26,10 +26,19 @@ async function deleteExpense(token, expenseId) {
   return
 }
 
+async function getGeneralExpensevalues(token, groupId){
+  const { data: res } = await axios.get(
+    `${import.meta.env.VITE_APP_API_URL}/expense/general/${groupId}`,
+    createConfig(token)
+  );
+  return res;
+}
+
 const apiExpense = {
   splitExpenseWithMembers,
   getExpenses,
-  deleteExpense
+  deleteExpense,
+  getGeneralExpensevalues
 };
 
 export default apiExpense;

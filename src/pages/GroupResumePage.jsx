@@ -1,7 +1,53 @@
+import { useEffect, useState } from "react";
 import Header from "../components/Header/header";
 import { w } from "windstitch";
+import useToken from "../hooks/useToken";
+import useData from "../hooks/useData";
+import { useNavigate, useParams } from "react-router-dom";
+import apiExpense from "../services/ApiExpense";
+import { maskValue } from "../utils/masks";
 
 export default function GroupResumePage() {
+  const navigate = useNavigate();
+  const { groupId } = useParams();
+  const token = useToken()
+  const user = useData()
+  const [values, setValues] = useState([])
+  const [membersValues, setMemberValues] = useState([])
+  const [negative, setNegative] = useState(false)
+
+  useEffect(() => {
+    async function getAllValues() {
+      try {
+        const result = await apiExpense.getGeneralExpensevalues(token, groupId);
+        console.log(result.members)
+        setValues(result)
+        setMemberValues(result.members)
+      } catch (err) {
+        console.log(err.response.data.message);
+        if (err.response.status === 401) navigate("/sign-in");
+      }
+    }
+
+    getAllValues();
+  }, []);
+
+  const UserPayOrReceivevalue = () => {
+    let value = null
+
+    for (const member of membersValues) {
+      if (member.name === user.name) {
+        value = member.value;
+        break;
+      }
+    }
+    
+   return value
+  }
+
+ 
+
+
   return (
     <Container>
       <Header />
@@ -12,21 +58,21 @@ export default function GroupResumePage() {
             <Thead>
               <tr>
                 <Th>Gasto total do grupo</Th>
-                <Td>R$ 25653,00</Td>
+                <Td>R$ {maskValue(values.group)}</Td>
               </tr>
             </Thead>
             <Tbody>
               <tr>
                 <Th>Sua parte Total</Th>
-                <Td>R$ 653,00</Td>
+                <Td>R$ {maskValue(values.userPart)}</Td>
               </tr>
               <tr>
                 <Th>Total pago por você</Th>
-                <Td>R$ 1653,00</Td>
+                <Td>R$ {maskValue(values.userPaid)} </Td>
               </tr>
               <tr>
-                <Th>Total a receber</Th>
-                <Td>R$ 25653,00</Td>
+                <Th>Total a {UserPayOrReceivevalue() >= 0 ? "receber" : "pagar"}</Th>
+                <Td>R$ {maskValue(UserPayOrReceivevalue()*-1)}</Td>
               </tr>
             </Tbody>
           </Table>
@@ -55,7 +101,7 @@ text-3xl font-bold leading-none text-gray-900 dark:text-white mt-[140px] mb-[20p
 `);
 
 const TableBox = w.div(`
-w-6/12 overflow-x-auto shadow-md sm:rounded-lg
+min-w-6/12 overflow-x-auto shadow-md sm:rounded-lg
 `);
 
 const Table = w.table(`
