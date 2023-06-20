@@ -14,7 +14,6 @@ export default function GroupResumePage() {
   const user = useData()
   const [values, setValues] = useState([])
   const [membersValues, setMemberValues] = useState([])
-  const [negative, setNegative] = useState(false)
 
   useEffect(() => {
     async function getAllValues() {
@@ -72,7 +71,7 @@ export default function GroupResumePage() {
               </tr>
               <tr>
                 <Th>Total a {UserPayOrReceivevalue() >= 0 ? "receber" : "pagar"}</Th>
-                <Td>R$ {maskValue(UserPayOrReceivevalue()*-1)}</Td>
+                <Td>R$ {maskValue(UserPayOrReceivevalue()>= 0 ? UserPayOrReceivevalue() : UserPayOrReceivevalue()*-1)}</Td>
               </tr>
             </Tbody>
           </Table>

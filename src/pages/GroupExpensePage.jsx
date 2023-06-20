@@ -11,9 +11,9 @@ import apiExpense from "../services/ApiExpense";
 
 export default function GroupExpensePage() {
   const { groupId } = useParams();
-  const [groupMembers, sergroupMembers] = useState([])
+  const [groupMembers, sergroupMembers] = useState([]);
   const [description, setDescripition] = useState("");
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState("");
   const [selectAll, setSelectAll] = useState(false);
   const [selectSome, setSelectSome] = useState(false);
   const [selectedMembers, setSelectedMembers] = useState([]);
@@ -23,13 +23,16 @@ export default function GroupExpensePage() {
   useEffect(() => {
     async function getMembers() {
       try {
-        const result = await apiParticipant.getGroupAcceptedParticipant(token, groupId);
-        console.log(result);
-        sergroupMembers(result)
+        const result = await apiParticipant.getGroupAcceptedParticipant(
+          token,
+          groupId
+        );
+        //console.log(result);
+        sergroupMembers(result);
         setUnselectMembers(result);
       } catch (err) {
-        //console.log(err.response.data.message);
-        console.log(err);
+        console.log(err.response.data.message);
+        //console.log(err);
         if (err.response.status === 401) navigate("/sign-in");
       }
     }
@@ -38,24 +41,40 @@ export default function GroupExpensePage() {
   }, []);
 
   function handleSelectAll() {
-    setSelectSome(false);
-    setSelectAll(!selectAll);
-    setSelectedMembers(unselectMembers)
+    if (selectAll === true) {
+      setSelectSome(false);
+      setSelectAll(false);
+      setSelectedMembers([]);
+    } else {
+      setSelectSome(false);
+      setSelectAll(true);
+      setUnselectMembers(groupMembers)
+      setSelectedMembers(groupMembers);
+    }
   }
 
   function handleSelectSome() {
-    setSelectAll(false);
-    setSelectSome(!selectSome);
+    if(selectSome === true){
+      setSelectAll(false)
+      setSelectSome(false)
+      setSelectedMembers([])
+      setUnselectMembers(groupMembers)
+    }else{
+      setSelectAll(false);
+      setSelectSome(true);
+      setSelectedMembers([])
+    }
+    
   }
 
   async function onSubmit(e) {
     e.preventDefault();
-    if (selectedMembers.length === 0){
-      alert("Selecione pelo menos um membro")
-      return
+    if (selectedMembers.length === 0) {
+      alert("Selecione pelo menos um membro");
+      return;
     }
     try {
-      const formatedGroupId = Number(groupId)
+      const formatedGroupId = Number(groupId);
       const totalValue = value * 100;
       const participantsIds = selectedMembers.map((item) => ({ id: item.id }));
       const body = {
@@ -64,16 +83,16 @@ export default function GroupExpensePage() {
         totalValue,
         participantsIds,
       };
-      
-      console.log(body)
+
+      console.log(body);
       await apiExpense.splitExpenseWithMembers(token, body);
 
-      setDescripition("")
-      setValue("")
-      setSelectedMembers([])
-      setUnselectMembers(groupMembers)
-      setSelectAll(false)
-      setSelectSome(false)
+      setDescripition("");
+      setValue("");
+      setSelectedMembers([]);
+      setUnselectMembers(groupMembers);
+      setSelectAll(false);
+      setSelectSome(false);
     } catch (err) {
       console.log(err.response.data.message);
     }
