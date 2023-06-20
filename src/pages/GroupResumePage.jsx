@@ -35,7 +35,6 @@ export default function GroupResumePage() {
 
   const UserBalance = () => {
     let value = null;
-
     for (const member of membersValues) {
       if (member.name === user.name) {
         value = member.value;
