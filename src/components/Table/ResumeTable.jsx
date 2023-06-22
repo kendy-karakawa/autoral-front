@@ -1,8 +1,8 @@
 import { w } from "windstitch";
 import { maskValue } from "../../utils/masks";
 
-export default function ResumeTable({values, UserBalance}){
-    const {value, positive} = UserBalance()
+export default function ResumeTable({values, userBalance}){
+    const {value, positive} = userBalance
 
     return(
         <TableBox>

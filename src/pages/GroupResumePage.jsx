@@ -15,15 +15,17 @@ export default function GroupResumePage() {
   const token = useToken();
   const user = useData();
   const [values, setValues] = useState([]);
-  const [membersValues, setMemberValues] = useState([]);
+  const [userBalance, setUserbalance] = useState([]);
+  const [paymentsInfo, setPaymentsInfo] = useState([]);
 
   useEffect(() => {
     async function getAllValues() {
       try {
         const result = await apiExpense.getGeneralExpensevalues(token, groupId);
-        //console.log(result.members);
         setValues(result);
-        setMemberValues(result.members);
+        configUserBalance(result.members);
+        paymentInformation(result.members);
+        //console.log(result.members);
       } catch (err) {
         console.log(err.response.data.message);
         if (err.response.status === 401) navigate("/sign-in");
@@ -33,28 +35,81 @@ export default function GroupResumePage() {
     getAllValues();
   }, []);
 
-  const UserBalance = () => {
+  function configUserBalance(element) {
     let value = null;
-    for (const member of membersValues) {
+    for (const member of element) {
       if (member.name === user.name) {
         value = member.value;
-        break;
       }
     }
 
     if (value >= 0) {
-      return { value, positive: true };
+      setUserbalance({ value, positive: true });
+      return;
     }
-    return { value: value * -1, positive: false };
-  };
+    setUserbalance({ value: value * -1, positive: false });
+    return;
+  }
+
+  function paymentInformation(element) {
+    const positive = [];
+    const negative = [];
+
+    for (const member of element) {
+      if (member.value >= 0) {
+        positive.push(member);
+      } else {
+        negative.push(member);
+      }
+    }
+
+    const payments = [];
+
+    let negativeIndex = 0;
+    let positiveIndex = 0;
+
+    while (negativeIndex < negative.length && positiveIndex < positive.length) {
+      const negativeValue = negative[negativeIndex].value;
+      const positiveValue = positive[positiveIndex].value;
+
+      if (negativeValue > 0) {
+        break;
+      }
+
+      const payment = Math.min(-negativeValue, positiveValue);
+      negative[negativeIndex].value += payment;
+      positive[positiveIndex].value -= payment;
+
+      const negativeName = (negative[negativeIndex].name === user.name? "Você" : negative[negativeIndex].name)
+      const positiveName = (positive[positiveIndex].name === user.name? "Você" : positive[positiveIndex].name)
+
+      if (negative[negativeIndex].value === 0) {
+        payments.push(
+          `${negativeName} deve R$ ${maskValue(
+            payment
+          )} para ${positiveName}`
+        );
+        negativeIndex++;
+      } else if (positive[positiveIndex].value === 0) {
+        payments.push(
+          `${negativeName} deve R$ ${maskValue(
+            payment
+          )} para ${positiveName}`
+        );
+        positiveIndex++;
+      }
+    }
+
+    setPaymentsInfo(payments);
+  }
 
   return (
     <Container>
       <Header />
       <WhiteBox>
         <Title>Visão geral</Title>
-        <ResumeTable values={values} UserBalance={UserBalance} />
-        <PaymentTable membersValues={membersValues} />
+        <ResumeTable values={values} userBalance={userBalance} />
+        <PaymentTable paymentsInfo={paymentsInfo} />
       </WhiteBox>
     </Container>
   );

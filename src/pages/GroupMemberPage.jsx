@@ -31,7 +31,7 @@ export default function GroupMemberPage() {
   return (
     <Container>
       <Header />
-      <WhiteBox>
+      <Box>
         <Title>Membros</Title>
         <ul items={members.length}>
           {members.map((el) => (
@@ -45,7 +45,7 @@ export default function GroupMemberPage() {
           toggle={toggle}
           setToggle={setToggle}
         />
-      </WhiteBox>
+      </Box>
     </Container>
   );
 }
@@ -55,13 +55,19 @@ const Container = w.div(`
     h-screen
     bg-gradient-to-b from-blue-400 to-teal-400	
     flex
+    flex-col
     items-center	
     justify-center
     overflow-auto	  
+    pt-[220px]
 `);
 
 const WhiteBox = w.div(`
 w-full  md:w-6/12 bg-slate-100 min-h-full flex flex-col items-center justify-start  
+`);
+
+const Box = w.div(`
+flex flex-col items-center 
 `);
 
 const Title = w.h1(`
