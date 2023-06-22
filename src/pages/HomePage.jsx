@@ -6,6 +6,7 @@ import { w } from "windstitch";
 import apiGroup from "../services/ApiGroup";
 import useToken from "../hooks/useToken";
 import { Link, useNavigate } from "react-router-dom";
+import BaseScreen from "../components/BaseScreen/BaseScreen";
 
 export default function HomePage() {
   const [groups, setGroups] = useState([]);
@@ -27,9 +28,8 @@ export default function HomePage() {
   }, [toggle]);
 
   return (
-    <Container>
-      <Header />
-      <WhiteBox>
+    <BaseScreen>
+   
         <Title>Encontre seu grupo</Title>
         <CardBox>
           {groups.length === 0 && <p>Nenhum grupo encontrado!</p>}
@@ -48,8 +48,7 @@ export default function HomePage() {
             <Button>Criar grupo</Button>
           </Link>
         </ButtonBox>
-      </WhiteBox>
-    </Container>
+    </BaseScreen>
   );
 }
 
@@ -68,7 +67,7 @@ w-full md:w-6/12 bg-slate-100 min-h-full flex flex-col items-center justify-betw
 `);
 
 const Title = w.h1(`
-text-3xl font-bold leading-none text-gray-900 dark:text-white mt-[140px] mb-[20px]
+text-3xl font-bold leading-none text-gray-900 dark:text-white mb-[20px]
 `);
 
 const MiniText = w.p(`
@@ -76,7 +75,7 @@ text-sm font-medium text-gray-500 dark:text-gray-300 mt-2
 `);
 
 const CardBox = w.div(`
-w-6/12 h-full flex flex-col items-center justify-between
+h-full flex flex-col items-center justify-between
 `);
 
 const ButtonBox = w.div(`w-6/12 mb-[50px]`);

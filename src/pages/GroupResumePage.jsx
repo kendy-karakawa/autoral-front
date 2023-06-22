@@ -8,6 +8,7 @@ import apiExpense from "../services/ApiExpense";
 import { maskValue } from "../utils/masks";
 import ResumeTable from "../components/Table/ResumeTable";
 import PaymentTable from "../components/Table/PaymentTable";
+import BaseScreen from "../components/BaseScreen/BaseScreen";
 
 export default function GroupResumePage() {
   const navigate = useNavigate();
@@ -104,31 +105,34 @@ export default function GroupResumePage() {
   }
 
   return (
-    <Container>
-      <Header />
-      <WhiteBox>
+    <BaseScreen>
+     
         <Title>Visão geral</Title>
         <ResumeTable values={values} userBalance={userBalance} />
         <PaymentTable paymentsInfo={paymentsInfo} />
-      </WhiteBox>
-    </Container>
+      
+    </BaseScreen>
   );
 }
 
-const Container = w.div(`
-    w-full
-    h-screen
-    bg-gradient-to-b from-blue-400 to-teal-400	
-    flex
-    items-center	
-    justify-center
-    overflow-auto	  
-`);
+// const Container = w.div(`
+//     w-full
+//     h-screen
+//     bg-gradient-to-b from-blue-400 to-teal-400	
+//     flex
+//     items-center	
+//     justify-center
+//     overflow-auto	  
+// `);
 
-const WhiteBox = w.div(`
-w-full md:w-6/12 bg-slate-100 min-h-full flex flex-col items-center justify-start  
-`);
+// const WhiteBox = w.div(`
+// w-full md:w-6/12 bg-slate-100 min-h-full flex flex-col items-center justify-start  
+// `);
+
+// const Box = w.div(`
+// flex flex-col items-center 
+// `);
 
 const Title = w.h1(`
-text-3xl font-bold leading-none text-gray-900 dark:text-white mt-[100px] mb-[20px]
+text-3xl font-bold leading-none text-gray-900 dark:text-white mb-[20px]
 `);

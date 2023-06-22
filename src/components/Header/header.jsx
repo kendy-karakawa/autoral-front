@@ -11,35 +11,57 @@ export default function Header() {
       <Container>
         <LeftBox>
           <Link to={"/"}>
-          <Avatar src={user.image} alt="avatar" />
+            <Avatar src={user.image} alt="avatar" />
           </Link>
           <UserName>{user.name}</UserName>
-          
         </LeftBox>
-        {groupId && <MiddleBox>
-          <Ul>
-            <li>
-              <Link to={`/group/${groupId}/`}>
-                <Title>Historico</Title>
-              </Link>
-            </li>
-            <li>
-              <Link to={`/group/${groupId}/expense`}>
-                <Title>Adicionar</Title>
-              </Link>
-            </li>
-            <li>
-              <Link to={`/group/${groupId}/resume`}>
-                <Title>Resumo</Title>
-              </Link>
-            </li>
-            <li>
-              <Link to={`/group/${groupId}/member`}>
-                <Title>Membros</Title>
-              </Link>
-            </li>
-          </Ul>
-        </MiddleBox>}
+        {!groupId && (
+          <MiddleBox>
+            <Ul>
+              <li>
+                <Link to={`/`}>
+                  <Title>Home</Title>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/create-group`}>
+                  <Title>Criar grupo</Title>
+                </Link>
+              </li>
+            </Ul>
+          </MiddleBox>
+        )}
+        {groupId && (
+          <MiddleBox>
+            <Ul>
+              <li>
+                <Link to={`/`}>
+                  <Title>Home</Title>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/group/${groupId}/`}>
+                  <Title>Historico</Title>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/group/${groupId}/expense`}>
+                  <Title>Adicionar</Title>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/group/${groupId}/resume`}>
+                  <Title>Resumo</Title>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/group/${groupId}/member`}>
+                  <Title>Membros</Title>
+                </Link>
+              </li>
+            </Ul>
+          </MiddleBox>
+        )}
       </Container>
     </Navbar>
   );

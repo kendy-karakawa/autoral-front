@@ -6,6 +6,7 @@ import { w } from "windstitch";
 import apiGroup from "../services/ApiGroup";
 import { useNavigate } from "react-router-dom";
 import useToken from "../hooks/useToken";
+import BaseScreen from "../components/BaseScreen/BaseScreen";
 
 export default function CreateGroupPage() {
   const [disable, setDisable] = useState(false);
@@ -26,9 +27,8 @@ export default function CreateGroupPage() {
   }
 
   return (
-    <Container>
-      <Header />
-      <WhiteBox>
+    <BaseScreen>
+     
         <Title>Crie seu grupo</Title>
         <Form onSubmit={onSubmit}>
           <Input
@@ -42,8 +42,7 @@ export default function CreateGroupPage() {
           />
           <Button>Criar grupo</Button>
         </Form>
-      </WhiteBox>
-    </Container>
+    </BaseScreen>
   );
 }
 
@@ -62,11 +61,11 @@ w-full md:w-6/12 bg-slate-100 min-h-full flex flex-col items-center justify-star
 `);
 
 const Form = w.form(
-  `w-6/12 flex min-h-[50%] flex-col items-center justify-between `
+  `flex w-6/12 flex-col items-center justify-between `
 );
 
 const Title = w.h1(`
-text-3xl font-bold leading-none text-gray-900 dark:text-white mt-[140px] mb-[20px]
+text-3xl font-bold leading-none text-gray-900 dark:text-white mb-[20px]
 `);
 
 

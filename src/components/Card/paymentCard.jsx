@@ -36,7 +36,7 @@ dark:border-gray-900 dark:bg-gray-700
 `)
 
 const Time = w.time(`
-mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500   
+mb-1 text-sm font-normal leading-none text-gray-900 dark:text-gray-500   
 `)
 
 const Title = w.h3(`
@@ -44,11 +44,11 @@ text-lg font-semibold text-gray-900 dark:text-white
 `);
 
 const P = w.p(`
-mb-2 text-base font-normal text-gray-500 dark:text-gray-400   
+mb-2 text-base font-normal text-gray-900 dark:text-gray-400   
 `)
 
 const Names = w.span(`
-mb-2 text-base font-bold text-gray-500 dark:text-gray-400   
+mb-2 text-base font-bold text-gray-900 dark:text-gray-400   
 
 `)
 

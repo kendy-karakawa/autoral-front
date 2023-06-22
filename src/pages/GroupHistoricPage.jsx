@@ -6,6 +6,7 @@ import PaymentCard from "../components/Card/paymentCard";
 import apiExpense from "../services/ApiExpense";
 import useToken from "../hooks/useToken";
 import useData from "../hooks/useData";
+import BaseScreen from "../components/BaseScreen/BaseScreen";
 
 export default function GroupHistoricPage() {
   const navigate = useNavigate();
@@ -34,9 +35,7 @@ export default function GroupHistoricPage() {
   }, [toggle]);
 
   return (
-    <Container>
-      <Header />
-      <WhiteBox>
+    <BaseScreen>
         <Title>Historico</Title>
         <>
           <CardBox>
@@ -52,8 +51,7 @@ export default function GroupHistoricPage() {
             
           </CardBox>
         </>
-      </WhiteBox>
-    </Container>
+    </BaseScreen>
   );
 }
 
@@ -74,9 +72,9 @@ const WhiteBox = w.div(`
 const Box = w.div(`w-10/12 flex min-h-[50%] `);
 
 const Title = w.h1(`
-text-3xl font-bold leading-none text-gray-900 dark:text-white mt-[140px] mb-[20px]
+text-3xl font-bold leading-none text-gray-900 dark:text-white mb-[20px]
 `);
 
 const CardBox = w.ol(`
-relative border-l border-gray-400 
+relative border-l border-white-900 
 `);

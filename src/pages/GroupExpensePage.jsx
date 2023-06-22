@@ -8,6 +8,7 @@ import SplitMember from "../components/SplitMember/SplitMember";
 import apiParticipant from "../services/ApiParticipant";
 import Button from "../components/Form/Button";
 import apiExpense from "../services/ApiExpense";
+import BaseScreen from "../components/BaseScreen/BaseScreen";
 
 export default function GroupExpensePage() {
   const { groupId } = useParams();
@@ -48,23 +49,22 @@ export default function GroupExpensePage() {
     } else {
       setSelectSome(false);
       setSelectAll(true);
-      setUnselectMembers(groupMembers)
+      setUnselectMembers(groupMembers);
       setSelectedMembers(groupMembers);
     }
   }
 
   function handleSelectSome() {
-    if(selectSome === true){
-      setSelectAll(false)
-      setSelectSome(false)
-      setSelectedMembers([])
-      setUnselectMembers(groupMembers)
-    }else{
+    if (selectSome === true) {
+      setSelectAll(false);
+      setSelectSome(false);
+      setSelectedMembers([]);
+      setUnselectMembers(groupMembers);
+    } else {
       setSelectAll(false);
       setSelectSome(true);
-      setSelectedMembers([])
+      setSelectedMembers([]);
     }
-    
   }
 
   async function onSubmit(e) {
@@ -99,62 +99,59 @@ export default function GroupExpensePage() {
   }
 
   return (
-    <Container>
-      <Header />
-      <WhiteBox>
-        <Title>Adicionar despesa</Title>
-        <Form onSubmit={onSubmit}>
-          <Input
-            label="description"
-            type="text"
-            placeholder="Descrição"
-            value={description}
-            required
-            onChange={(e) => setDescripition(e.target.value)}
-          />
-          <Input
-            label="value"
-            type="number"
-            step="0.01"
-            min="0.01"
-            placeholder="Valor"
-            value={value}
-            required
-            onChange={(e) => setValue(e.target.value)}
-          />
-          <CheckBoxContainer>
-            <CheckBoxDiv>
-              <CheckInput
-                type="checkbox"
-                checked={selectAll}
-                onChange={handleSelectAll}
-              />
-              <Label>Dividir com todos os membros</Label>
-            </CheckBoxDiv>
-            <CheckBoxDiv>
-              <CheckInput
-                type="checkbox"
-                checked={selectSome}
-                onChange={handleSelectSome}
-              />
-              <Label>Selecionar membros para a divisão</Label>
-            </CheckBoxDiv>
-          </CheckBoxContainer>
-          {selectSome && (
-            <SplitMember
-              token={token}
-              groupId={groupId}
-              selectedMembers={selectedMembers}
-              setSelectedMembers={setSelectedMembers}
-              unselectMembers={unselectMembers}
-              setUnselectMembers={setUnselectMembers}
+    <BaseScreen>
+      <Title>Adicionar despesa</Title>
+      <Form onSubmit={onSubmit}>
+        <Input
+          label="description"
+          type="text"
+          placeholder="Descrição"
+          value={description}
+          required
+          onChange={(e) => setDescripition(e.target.value)}
+        />
+        <Input
+          label="value"
+          type="number"
+          step="0.01"
+          min="0.01"
+          placeholder="Valor"
+          value={value}
+          required
+          onChange={(e) => setValue(e.target.value)}
+        />
+        <CheckBoxContainer>
+          <CheckBoxDiv>
+            <CheckInput
+              type="checkbox"
+              checked={selectAll}
+              onChange={handleSelectAll}
             />
-          )}
+            <Label>Dividir com todos os membros</Label>
+          </CheckBoxDiv>
+          <CheckBoxDiv>
+            <CheckInput
+              type="checkbox"
+              checked={selectSome}
+              onChange={handleSelectSome}
+            />
+            <Label>Selecionar membros para a divisão</Label>
+          </CheckBoxDiv>
+        </CheckBoxContainer>
+        {selectSome && (
+          <SplitMember
+            token={token}
+            groupId={groupId}
+            selectedMembers={selectedMembers}
+            setSelectedMembers={setSelectedMembers}
+            unselectMembers={unselectMembers}
+            setUnselectMembers={setUnselectMembers}
+          />
+        )}
 
-          <Button>Enviar</Button>
-        </Form>
-      </WhiteBox>
-    </Container>
+        <Button>Enviar</Button>
+      </Form>
+    </BaseScreen>
   );
 }
 
@@ -175,7 +172,7 @@ w-full md:w-6/12 bg-slate-100 min-h-full flex flex-col items-center justify-star
 const Form = w.form(`flex min-h-[50%] flex-col items-center justify-between `);
 
 const Title = w.h1(`
-text-3xl font-bold leading-none text-gray-900 dark:text-white mt-[140px] mb-[20px]
+text-3xl font-bold leading-none text-gray-900 dark:text-white mb-[20px]
 `);
 
 const CheckInput = w.input(`
