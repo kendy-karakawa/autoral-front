@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Header from "../components/Header/header";
 import { w } from "windstitch";
 import { useNavigate, useParams } from "react-router-dom";
 import PaymentCard from "../components/Card/paymentCard";
@@ -22,7 +21,7 @@ export default function GroupHistoricPage() {
     async function getAllExpenses() {
       try {
         const result = await apiExpense.getExpenses(token, groupId);
-        console.log(result)
+        //console.log(result)
         setExpenses(result.expenses)
         setMemberQty(result.quantity)
       } catch (err) {

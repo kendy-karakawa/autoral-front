@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Header from "../components/Header/header";
 import { w } from "windstitch";
 import useToken from "../hooks/useToken";
 import useData from "../hooks/useData";

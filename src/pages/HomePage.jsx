@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Header from "../components/Header/header";
 import GroupCard from "../components/Card/GroupCard";
 import Button from "../components/Form/Button";
 import { w } from "windstitch";
