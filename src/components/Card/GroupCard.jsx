@@ -36,7 +36,8 @@ export default function GroupCard({ data, toggle, setToggle }) {
 }
 
 const CardContainer = w.div(`
-    w-full max-w-sm min-w-[300px] bg-white border border-gray-200 rounded-lg shadow 
+    min-w-[300px] md:min-w-[400px]
+    bg-white border border-gray-200 rounded-lg shadow 
     dark:bg-gray-800 dark:border-gray-700  p-3 flex items-center justify-between mt-2
 `);
 

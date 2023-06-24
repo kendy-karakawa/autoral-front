@@ -8,6 +8,7 @@ import GroupMemberPage from "./pages/GroupMemberPage";
 import GroupHistoricPage from "./pages/GroupHistoricPage";
 import GroupExpensePage from "./pages/GroupExpensePage";
 import GroupResumePage from "./pages/GroupResumePage";
+import ProfilePage from "./pages/ProfilePage";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/sign-in" element={<SignInPage />} />
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/create-group" element={<CreateGroupPage />} />

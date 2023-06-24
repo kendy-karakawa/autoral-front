@@ -12,60 +12,43 @@ export default function CreateGroupPage() {
   const [disable, setDisable] = useState(false);
   const [groupName, setGroupName] = useState("");
   const navigate = useNavigate();
-  const token = useToken()
+  const token = useToken();
 
   async function onSubmit(e) {
     e.preventDefault();
     try {
       await apiGroup.create(token, groupName);
-      setGroupName("")
-      navigate("/")
+      setGroupName("");
+      navigate("/");
     } catch (err) {
       console.log(err.response.data.message);
-      if(err.response.status === 401) navigate("/sign-in")
+      if (err.response.status === 401) navigate("/sign-in");
     }
   }
 
   return (
     <BaseScreen>
-     
-        <Title>Crie seu grupo</Title>
-        <Form onSubmit={onSubmit}>
-          <Input
-            label="groupName"
-            type="text"
-            placeholder="Nome"
-            value={groupName}
-            required
-            disabled={disable}
-            onChange={(e) => setGroupName(e.target.value)}
-          />
-          <Button>Criar grupo</Button>
-        </Form>
+      <Title>Crie seu grupo</Title>
+      <Form onSubmit={onSubmit}>
+        <Input
+          label="groupName"
+          type="text"
+          placeholder="Nome"
+          value={groupName}
+          required
+          disabled={disable}
+          onChange={(e) => setGroupName(e.target.value)}
+        />
+        <Button>Criar grupo</Button>
+      </Form>
     </BaseScreen>
   );
 }
 
-const Container = w.div(`
-    w-full
-    h-screen
-    bg-gradient-to-b from-blue-400 to-teal-400	
-    flex
-    items-center	
-    justify-center
-    overflow-auto	  
-`);
-
-const WhiteBox = w.div(`
-w-full md:w-6/12 bg-slate-100 min-h-full flex flex-col items-center justify-start  
-`);
-
 const Form = w.form(
-  `flex w-6/12 flex-col items-center justify-between `
+  `flex min-w-[300px] md:min-w-[400px] flex-col items-center justify-between `
 );
 
 const Title = w.h1(`
 text-3xl font-bold leading-none text-gray-900 dark:text-white mb-[20px]
 `);
-
-

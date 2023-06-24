@@ -10,7 +10,7 @@ async function signIn(body) {
 }
 
 async function signOut(token) {
-  axios.delete(`${import.meta.env.VITE_APP_API_URL}/sigin`, createConfig(token));
+  axios.delete(`${import.meta.env.VITE_APP_API_URL}/siginout`, createConfig(token));
 }
 
 const apiAuth = {

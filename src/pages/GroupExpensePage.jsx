@@ -155,19 +155,6 @@ export default function GroupExpensePage() {
   );
 }
 
-const Container = w.div(`
-    w-full
-    h-screen
-    bg-gradient-to-b from-blue-400 to-teal-400	
-    flex
-    items-center	
-    justify-center
-    overflow-auto	  
-`);
-
-const WhiteBox = w.div(`
-w-full md:w-6/12 bg-slate-100 min-h-full flex flex-col items-center justify-start  
-`);
 
 const Form = w.form(`flex min-h-[50%] flex-col items-center justify-between `);
 
@@ -192,8 +179,5 @@ const CheckBoxContainer = w.div(`
 flex-col items-center justify-between w-full mt-[10px]
 `);
 
-const MiniText = w.p(`
-text-sm font-medium text-gray-500 dark:text-gray-300 mt-2
-`);
 
-const ButtonBox = w.div(`w-6/12 mb-[50px]`);
+

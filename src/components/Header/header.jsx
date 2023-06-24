@@ -1,91 +1,180 @@
-import { w } from "windstitch";
-import { Link, useParams } from "react-router-dom";
+import { Fragment } from "react";
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import useData from "../../hooks/useData";
+import apiAuth from "../../services/ApiAuth";
+import useToken from "../../hooks/useToken";
 
-export default function Header() {
-  const user = useData();
-  const { groupId } = useParams();
-
-  return (
-    <Navbar>
-      <Container>
-        <LeftBox>
-          <Link to={"/"}>
-            <Avatar src={user.image} alt="avatar" />
-          </Link>
-          <UserName>{user.name}</UserName>
-        </LeftBox>
-        {!groupId && (
-          <MiddleBox>
-            <Ul>
-              <li>
-                <Link to={`/`}>
-                  <Title>Home</Title>
-                </Link>
-              </li>
-              <li>
-                <Link to={`/create-group`}>
-                  <Title>Criar grupo</Title>
-                </Link>
-              </li>
-            </Ul>
-          </MiddleBox>
-        )}
-        {groupId && (
-          <MiddleBox>
-            <Ul>
-              <li>
-                <Link to={`/`}>
-                  <Title>Home</Title>
-                </Link>
-              </li>
-              <li>
-                <Link to={`/group/${groupId}/`}>
-                  <Title>Historico</Title>
-                </Link>
-              </li>
-              <li>
-                <Link to={`/group/${groupId}/expense`}>
-                  <Title>Adicionar</Title>
-                </Link>
-              </li>
-              <li>
-                <Link to={`/group/${groupId}/resume`}>
-                  <Title>Resumo</Title>
-                </Link>
-              </li>
-              <li>
-                <Link to={`/group/${groupId}/member`}>
-                  <Title>Membros</Title>
-                </Link>
-              </li>
-            </Ul>
-          </MiddleBox>
-        )}
-      </Container>
-    </Navbar>
-  );
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
 }
 
-const Navbar = w.nav(
-  `bg-white dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600`
-);
-const Ul = w.ul(
-  `flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700`
-);
-const Container = w.div(
-  `max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4`
-);
-const Title = w.p(
-  `block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700`
-);
-const Avatar = w.img(
-  `w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500`
-);
-const UserName = w.span(
-  `self-center text-2xl font-semibold whitespace-nowrap dark:text-white ml-2`
-);
-const LeftBox = w.div(`flex items-center`);
-const MiddleBox = w.div(
-  `items-center justify-between hidden w-full md:flex md:w-auto md:order-1`
-);
+export default function HeaderT() {
+  const user = useData();
+  const { groupId } = useParams();
+  const token = useToken()
+  const navigation = [{ name: "Home", href: "/", current: true }];
+  const navigate = useNavigate();
+
+  const groupNavigation = [
+    { name: "Home", href: "/", current: true },
+    { name: "Historico", href: `/group/${groupId}/`, current: false },
+    { name: "Adicionar", href: `/group/${groupId}/expense`, current: false },
+    { name: "Resumo", href: `/group/${groupId}/resume`, current: false },
+    { name: "Membros", href: `/group/${groupId}/member`, current: false },
+  ];
+
+  async function logout (){
+    apiAuth.signOut(token)
+    localStorage.removeItem("userData")
+    navigate("/sign-in")
+  }
+  
+  return (
+    <div className="bg-gray-800">
+      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div className="relative flex h-16 items-center justify-between">
+        <div className="absolute inset-y-0 left-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <Menu
+            as="div"
+            className="relative ml-3 sm:hidden"
+          >
+            <div>
+              <Menu.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <span className="sr-only">Open main menu</span>
+                <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+              </Menu.Button>
+            </div>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="absolute left-0 z-10 mt-2 w-48 origin-top-left rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                {(!groupId ? navigation : groupNavigation).map((item) => (
+                  <Menu.Item key={item.name} as={Fragment}>
+                    {({ active }) => (
+                      <Link
+                        as={"a"}
+                        to={item.href}
+                        className={classNames(
+                          active ? "bg-gray-100" : "",
+                          "block px-4 py-2 text-sm text-gray-700"
+                        )}
+                      >
+                        {item.name}
+                      </Link>
+                    )}
+                  </Menu.Item>
+                ))}
+              </Menu.Items>
+            </Transition>
+          </Menu>
+          </div>
+          {/* left box */}
+          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+            {/* logo */}
+            {/* <div className="flex flex-shrink-0 items-center">
+              <img
+                className="block h-8 w-auto lg:hidden"
+                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                alt="Your Company"
+              />
+              <img
+                className="hidden h-8 w-auto lg:block"
+                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                alt="Your Company"
+              />
+            </div> */}
+            {/* navigation */}
+            <div className="hidden sm:ml-6 sm:block">
+              <div className="flex space-x-4">
+                {(!groupId ? navigation : groupNavigation).map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className={classNames(
+                      item.current
+                        ? "bg-gray-900 text-white"
+                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                      "rounded-md px-3 py-2 text-sm font-medium"
+                    )}
+                    aria-current={item.current ? "page" : undefined}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            {/* <button
+              type="button"
+              className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+            >
+              <span className="sr-only">View notifications</span>
+              <BellIcon className="h-6 w-6" aria-hidden="true" />
+            </button> */}
+
+            {/* Profile dropdown */}
+            <Menu as="div" className="relative ml-3">
+              <div>
+                <Menu.Button className="flex rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                  <span className="sr-only">Open user menu</span>
+                  <img
+                    className="h-8 w-8 rounded-full bg-white ring-2 ring-gray-300"
+                    src={user.image}
+                    alt=""
+                  />
+                </Menu.Button>
+              </div>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+              >
+                <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to={"/profile"}
+                        className={classNames(
+                          active ? "bg-gray-100" : "",
+                          "block px-4 py-2 text-sm text-gray-700"
+                        )}
+                      >
+                        Seu Perfil
+                      </Link>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <p
+                        onClick={logout}
+                        className={classNames(
+                          active ? "bg-gray-100" : "",
+                          "block px-4 py-2 text-sm text-gray-700"
+                        )}
+                      >
+                        Sair
+                      </p>
+                    )}
+                  </Menu.Item>
+                </Menu.Items>
+              </Transition>
+            </Menu>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
