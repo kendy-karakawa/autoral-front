@@ -48,7 +48,6 @@ export default function SignUpPage() {
             label="name"
             type="text"
             placeholder="Nome"
-            fullWidth
             value={name}
             required
             disabled={disable}
@@ -58,7 +57,6 @@ export default function SignUpPage() {
             label="Phone"
             type="phone"
             placeholder="Telefone"
-            fullWidth
             value={phone}
             pattern="[0-9]{11}"
             title="Por favor, digite um telefone válido com 11 dígitos"
@@ -72,7 +70,6 @@ export default function SignUpPage() {
             label="E-mail"
             type="email"
             placeholder="E-mail"
-            fullWidth
             value={email}
             required
             disabled={disable}
@@ -83,7 +80,6 @@ export default function SignUpPage() {
           <Input
             label="Password"
             type="password"
-            fullWidth
             placeholder="Senha"
             value={password}
             pattern="[A-Za-z0-9]{6,}"
@@ -97,7 +93,6 @@ export default function SignUpPage() {
           <Input
             label="Password"
             type="password"
-            fullWidth
             placeholder="Confirmar Senha"
             value={confirmPassword}
             required

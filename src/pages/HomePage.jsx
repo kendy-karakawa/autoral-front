@@ -19,7 +19,7 @@ export default function HomePage() {
         const result = await apiGroup.findUserGroup(token);
         setGroups(result);
       } catch (err) {
-        alert(err.response.data.message);
+        console.log(err.response.data.message);
         if (err.response.status === 401) navigate("/sign-in");
       }
     }
