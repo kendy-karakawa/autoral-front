@@ -83,11 +83,11 @@ const WhiteBox = w.div(`
 w-full md:w-6/12 bg-slate-100  h-full flex flex-col items-center justify-center  
 `);
 const Title = w.h1(`
-text-3xl font-bold leading-none text-gray-900 dark:text-white 
+text-3xl font-bold leading-none text-gray-900 
 `);
 
 const MiniText = w.p(`
-text-sm font-medium text-gray-500 dark:text-gray-300 mt-2
+text-sm font-medium text-gray-500  mt-2
 `);
 
 const Div = w.div(`w-full`);

@@ -32,23 +32,22 @@ const CardContainer = w.li(`mb-6 ml-6`);
 
 const Img = w.img(`
 absolute w-8 h-8 bg-gray-200 rounded-full ring-2 mt-1.5 -left-4 border border-white 
-dark:border-gray-900 dark:bg-gray-700
 `)
 
 const Time = w.time(`
-mb-1 text-sm font-normal leading-none text-gray-900 dark:text-gray-500   
+mb-1 text-sm font-normal leading-none text-gray-900   
 `)
 
 const Title = w.h3(`
-text-lg font-semibold text-gray-900 dark:text-white
+text-lg font-semibold text-gray-900 
 `);
 
 const P = w.p(`
-mb-2 text-base font-normal text-gray-900 dark:text-gray-400   
+mb-2 text-base font-normal text-gray-900   
 `)
 
 const Names = w.span(`
-mb-2 text-base font-bold text-gray-900 dark:text-gray-400   
+mb-2 text-base font-bold text-gray-900   
 
 `)
 

@@ -111,5 +111,5 @@ const Form = w.form(
 
 
 const Title = w.h1(`
-text-1xl font-medium leading-none text-gray-900 dark:text-white 
+text-1xl font-medium leading-none text-gray-900
 `);

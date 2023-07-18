@@ -42,17 +42,17 @@ w-full text-sm  text-gray-500 dark:text-gray-400
 `);
 
 const Thead = w.thead(`
-bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700
+bg-gray-100 border-b 
 `);
 
 const Tbody = w.tbody(`
-bg-white border-b dark:bg-gray-800 dark:border-gray-700
+bg-white border-b 
 `);
 
 const Th = w.th(`
-px-6 py-4 font-medium text-left text-gray-900 whitespace-nowrap dark:text-white
+px-6 py-4 font-medium text-left text-gray-900 whitespace-nowrap 
 `);
 
 const Td = w.td(`
-px-6 py-4 font-medium text-right text-gray-900 whitespace-nowrap dark:text-white
+px-6 py-4 font-medium text-right text-gray-900 whitespace-nowrap 
 `);

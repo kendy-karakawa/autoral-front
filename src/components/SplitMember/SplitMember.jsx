@@ -55,5 +55,5 @@ flex flex-col items-center justify-between mt-3
 `);
 
 const Title = w.h1(`
-text-1xl font-medium leading-none text-gray-900 dark:text-white mt-3 mb-3
+text-1xl font-medium leading-none text-gray-900  mt-3 mb-3
 `);

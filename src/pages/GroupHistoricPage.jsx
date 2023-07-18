@@ -72,7 +72,7 @@ const WhiteBox = w.div(`
 const Box = w.div(`w-10/12 flex min-h-[50%] `);
 
 const Title = w.h1(`
-text-3xl font-bold leading-none text-gray-900 dark:text-white mb-[20px]
+text-3xl font-bold leading-none text-gray-900  mb-[20px]
 `);
 
 const CardBox = w.ol(`

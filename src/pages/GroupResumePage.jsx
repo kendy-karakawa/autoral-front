@@ -114,24 +114,7 @@ export default function GroupResumePage() {
   );
 }
 
-// const Container = w.div(`
-//     w-full
-//     h-screen
-//     bg-gradient-to-b from-blue-400 to-teal-400	
-//     flex
-//     items-center	
-//     justify-center
-//     overflow-auto	  
-// `);
-
-// const WhiteBox = w.div(`
-// w-full md:w-6/12 bg-slate-100 min-h-full flex flex-col items-center justify-start  
-// `);
-
-// const Box = w.div(`
-// flex flex-col items-center 
-// `);
 
 const Title = w.h1(`
-text-3xl font-bold leading-none text-gray-900 dark:text-white mb-[20px]
+text-3xl font-bold leading-none text-gray-900  mb-[20px]
 `);

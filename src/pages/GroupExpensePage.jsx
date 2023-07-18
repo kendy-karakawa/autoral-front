@@ -158,16 +158,16 @@ export default function GroupExpensePage() {
 const Form = w.form(`flex min-h-[50%] flex-col items-center justify-between `);
 
 const Title = w.h1(`
-text-3xl font-bold leading-none text-gray-900 dark:text-white mb-[20px]
+text-3xl font-bold leading-none text-gray-900 mb-[20px]
 `);
 
 const CheckInput = w.input(`
 w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 
-dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600
+focus:ring-2 
 `);
 
 const Label = w.label(`
-w-full  ml-2 text-sm font-medium text-gray-900 dark:text-gray-300
+w-full  ml-2 text-sm font-medium text-gray-900 
 `);
 
 const CheckBoxDiv = w.div(`
