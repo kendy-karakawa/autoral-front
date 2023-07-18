@@ -21,7 +21,7 @@ export default function PaymentCard({ data, memberQty, userId, token, setToggle}
           <Names> {memberQty === divisions.length ? "Todos" : divisionMembers}</Names>
         </P>
         <ButtonBox>
-        {userId === paidBy.userId && <EditButton expenseId={expenseId}/>}
+        {/* {userId === paidBy.userId && <EditButton expenseId={expenseId}/>} */}
         {userId === paidBy.userId && <DeleteButton expenseId={expenseId} token={token} setToggle={setToggle}/>}
         </ButtonBox>
     </CardContainer>

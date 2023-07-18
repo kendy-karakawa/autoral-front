@@ -32,7 +32,7 @@ export default function DeleteButton({ expenseId, token, setToggle }) {
       {modalIsOpen && (
         <ModalContainer>
           <ModalBox>
-            <H2>Are you sure you want to delete this post?</H2>
+            <H2>Vocẽ realmente quer deletar esta despesa ?</H2>
             {deleteIsLoading ? (
               <ColorRing
                 visible={true}

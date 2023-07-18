@@ -37,6 +37,7 @@ export default function GroupHistoricPage() {
     <BaseScreen>
         <Title>Historico</Title>
         <>
+        {expenses.length === 0 && <h3>Não existe despesas ainda!</h3>}
           <CardBox>
             {expenses.map((el)=> (
             <PaymentCard 
