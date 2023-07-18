@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Input from "../components/Form/Input";
 import { w } from "windstitch";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useToken from "../hooks/useToken";
 import SplitMember from "../components/SplitMember/SplitMember";
 import apiParticipant from "../services/ApiParticipant";
@@ -19,6 +19,7 @@ export default function GroupExpensePage() {
   const [selectedMembers, setSelectedMembers] = useState([]);
   const [unselectMembers, setUnselectMembers] = useState([]);
   const token = useToken();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getMembers() {
@@ -92,6 +93,7 @@ export default function GroupExpensePage() {
       setUnselectMembers(groupMembers);
       setSelectAll(false);
       setSelectSome(false);
+      navigate(`/group/${groupId}/`)
     } catch (err) {
       console.log(err.response.data.message);
     }
